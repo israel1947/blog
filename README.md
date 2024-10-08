@@ -14,7 +14,7 @@ Desde el directorio raíz, puedes ejecutar el frontend y el backend juntos:
 
 ## Estructura de la app
 📁blog-app/
-|
+
 ├──📁 api/                   
 │   ├── 📄package.json                 
 │   └── 📄server.js                 
