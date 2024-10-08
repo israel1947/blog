@@ -2,7 +2,7 @@
 
 ## Instalación
 
-### En la raiz del pryecto
+### Instalar dependencias para ambos proyectos
 `npm install`
 
 ### Ejecutar ambos proyectos
