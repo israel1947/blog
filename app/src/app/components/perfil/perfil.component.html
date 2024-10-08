@@ -1,0 +1,36 @@
+@if(perfil){
+<div class="avatar-perifl-img cursor-pointer flex items-center">
+  <div class="img-perfil w-[48px] h-[48px] rounded-[50%] bg-cover bg-no-repeat object-center"
+    [ngStyle]="{'background-image': 'url(' + perfil?.photo + ')'}">
+  </div>
+  @if(!perfil?.photo){
+  <div
+    class="img-perfil-initial w-[48px] h-[48px] rounded-full flex items-center justify-center bg-blue-500 text-white font-bold text-lg" [ngStyle]="{'background-color': randomColor}">
+    {{ getInitials(perfil?.name, perfil?.last_name) }}
+  </div>
+  }
+  <button (click)="funMenuPerfil()">
+    <i class="ri-arrow-down-s-fill ri-xl text-white"></i>
+  </button>
+  @if (isOpen) {
+  <div class="absolute right-0 mt-[15rem] w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50 ">
+    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+        {{perfil?.name | titlecase}} {{perfil?.last_name | titlecase}}
+      </a>
+
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+        Configuraciones
+      </a>
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+        Mensajes
+      </a>
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+        Cerrar sesión
+      </a>
+    </div>
+  </div>
+  }
+</div>
+}

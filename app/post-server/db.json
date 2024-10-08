@@ -1,0 +1,263 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Understanding Angular Directives",
+      "image": "https://images.unsplash.com/photo-1561736778-92e52a7769ef?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "A comprehensive guide to understanding and implementing Angular directives in your projects.",
+      "tags": [
+        "Angular",
+        "Directives",
+        "JavaScript"
+      ],
+      "created_at": "2024-09-19T10:30:00Z",
+      "last_read_at": "2024-09-09T14:50:00Z",
+      "comments": 12,
+      "likes": 58,
+      "views": 120,
+      "category": "Tecnología",
+      "user_id": "1"
+    },
+    {
+      "id": "2",
+      "title": "Mastering Reactive Forms in Angular",
+      "image": "https://www.syncfusion.com/blogs/wp-content/uploads/2023/01/Mastering-Strictly-Typed-Reactive-Forms-in-Angular-A-Step-by-Step-Guide-1024x575.png",
+      "description": "Reactive Forms are one of the two primary ways to build forms in Angular, offering a more powerful and flexible way to handle form data and validation. Unlike Template-driven Forms, Reactive Forms are built entirely in the component class, giving developers complete control over the form and its data flow. In this comprehensive guide, we’ll dive deep into the fundamentals of Reactive Forms, exploring key topics such as creating and managing form controls, handling form validation, and dynamically modifying forms at runtime. We will also explore best practices for integrating third-party libraries and how to implement custom form validators to meet specific business logic. Furthermore, we’ll discuss advanced topics like form groups, form arrays, and how to handle complex form structures efficiently. By the end of this guide, you will be well-equipped to implement and manage Reactive Forms in Angular, making your forms more scalable, testable, and maintainable. Whether you are building simple user registration forms or complex data-driven applications, understanding and mastering Reactive Forms is crucial for any serious Angular developer.",
+      "tags": [
+        "Angular",
+        "Reactive Forms",
+        "JavaScript",
+        "Validation",
+        "Web Development"
+      ],
+      "created_at": "2024-09-25T11:45:00Z",
+      "last_read_at": "2024-09-30T09:10:00Z",
+      "comments": 25,
+      "likes": 102,
+      "views": 340,
+      "category": "Tecnología",
+      "user_id": "2"
+    },
+    {
+      "id": "3",
+      "title": "Effective Study Techniques for Students",
+      "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "Discover effective study techniques to improve your learning and academic performance.",
+      "tags": [
+        "Education",
+        "Study Techniques",
+        "Students"
+      ],
+      "created_at": "2024-08-18T10:00:00Z",
+      "last_read_at": "2024-09-09T11:00:00Z",
+      "comments": 16,
+      "likes": 70,
+      "views": 140,
+      "category": "Educación",
+      "user_id": "118422086166722814745"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "post_id": 1,
+      "author": "Ricky Watkins",
+      "author_photo": "https://randomuser.me/api/portraits/men/44.jpg",
+      "content": "Great article! I learned a lot about Angular directives.",
+      "created_at": "2024-09-09T15:30:00Z"
+    },
+    {
+      "id": "2",
+      "post_id": 1,
+      "author": "April Campbell",
+      "author_photo": "https://randomuser.me/api/portraits/women/62.jpg",
+      "content": "Very informative, thanks for sharing!",
+      "created_at": "2024-09-09T16:00:00Z"
+    },
+    {
+      "id": "3",
+      "post_id": 2,
+      "author": "Alice Brown",
+      "author_photo": "https://randomuser.me/api/portraits/men/40.jpg",
+      "content": "I love the tips for responsive design, they are very helpful!",
+      "created_at": "2024-09-08T10:30:00Z"
+    },
+    {
+      "id": "4",
+      "post_id": 3,
+      "author": "Bob Johnson",
+      "author_photo": "https://randomuser.me/api/portraits/men/30.jpg",
+      "content": "Async/Await was confusing to me before, but this article made it clear.",
+      "created_at": "2024-09-10T12:00:00Z"
+    },
+    {
+      "id": "5",
+      "post_id": 4,
+      "author": "Sarah Connor",
+      "author_photo": "https://randomuser.me/api/portraits/women/56.jpg",
+      "content": "AI in web development is such an exciting topic!",
+      "created_at": "2024-09-06T15:30:00Z"
+    },
+    {
+      "id": "6",
+      "post_id": 5,
+      "author": "Michael Scott",
+      "author_photo": "https://randomuser.me/api/portraits/men/62.jpg",
+      "content": "Accessibility is so important, thanks for covering this topic.",
+      "created_at": "2024-09-08T17:00:00Z"
+    },
+    {
+      "id": "7",
+      "post_id": 6,
+      "author": "Patsy Lopez",
+      "author_photo": "https://randomuser.me/api/portraits/women/30.jpg",
+      "content": "I'm still trying to decide between Grid and Flexbox, this helped.",
+      "created_at": "2024-09-07T19:00:00Z"
+    },
+    {
+      "id": "8",
+      "post_id": 7,
+      "author": "Pam Beesly",
+      "author_photo": "https://randomuser.me/api/portraits/women/59.jpg",
+      "content": "State management is such a complex topic, this breaks it down nicely.",
+      "created_at": "2024-09-10T13:00:00Z"
+    },
+    {
+      "id": "9",
+      "post_id": 8,
+      "author": "Jim Halpert",
+      "author_photo": "https://randomuser.me/api/portraits/women/70.jpg",
+      "content": "PWAs are the future! Great article.",
+      "created_at": "2024-09-09T15:45:00Z"
+    },
+    {
+      "id": "10",
+      "post_id": 9,
+      "author": "Stanley Hudson",
+      "author_photo": "https://randomuser.me/api/portraits/men/4.jpg",
+      "content": "I'm new to cloud-native development, this is a great introduction.",
+      "created_at": "2024-09-07T12:30:00Z"
+    },
+    {
+      "id": "11",
+      "post_id": 10,
+      "author": "Kelly Kapoor",
+      "author_photo": "https://randomuser.me/api/portraits/men/32.jpg",
+      "content": "GraphQL looks interesting, I might try it out!",
+      "created_at": "2024-09-08T14:00:00Z"
+    },
+    {
+      "id": "12",
+      "post_id": 11,
+      "author": "Ryan Howard",
+      "author_photo": "https://randomuser.me/api/portraits/men/4.jpg",
+      "content": "Regular exercise has changed my life, great to see it covered here.",
+      "created_at": "2024-09-09T10:00:00Z"
+    },
+    {
+      "id": "13",
+      "post_id": 12,
+      "author": "Meredith Palmer",
+      "author_photo": "https://randomuser.me/api/portraits/women/75.jpg",
+      "content": "I never knew where to start with investing, thanks for the guide!",
+      "created_at": "2024-09-09T17:30:00Z"
+    },
+    {
+      "id": "14",
+      "post_id": 13,
+      "author": "Angela Martin",
+      "author_photo": "https://randomuser.me/api/portraits/women/80.jpg",
+      "content": "Modern art is fascinating, thanks for this exploration.",
+      "created_at": "2024-09-05T15:00:00Z"
+    },
+    {
+      "id": "15",
+      "post_id": 14,
+      "author": "Oscar Martinez",
+      "author_photo": "https://randomuser.me/api/portraits/men/75.jpg",
+      "content": "Financial planning is crucial, thanks for the detailed overview.",
+      "created_at": "2024-09-08T13:30:00Z"
+    },
+    {
+      "id": "16",
+      "post_id": 15,
+      "author": "Toby Flenderson",
+      "author_photo": "https://randomuser.me/api/portraits/men/77.jpg",
+      "content": "Effective study techniques can really make a difference!",
+      "created_at": "2024-09-09T12:30:00Z"
+    },
+    {
+      "id": "17",
+      "post_id": 16,
+      "author": "Phyllis Vance",
+      "author_photo": "https://randomuser.me/api/portraits/women/75.jpg",
+      "content": "Latin American culture is so diverse and rich, great article!",
+      "created_at": "2024-09-10T09:00:00Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "Israel",
+      "last_name": "Polo",
+      "email": "correo@correo.com",
+      "password": "Celic@121",
+      "photo": ""
+    },
+    {
+      "id": "2",
+      "name": "Benjamin",
+      "last_name": "Polo",
+      "email": "correo@correo2.com",
+      "password": "celica121",
+      "photo": "https://randomuser.me/api/portraits/men/11.jpg"
+    },
+    {
+      "0": {
+        "id": "118422086166722814745",
+        "name": "ISRAEL DAVID",
+        "last_name": "POLO ARIAS",
+        "email": "israel.polo@cun.edu.co",
+        "photo": "https://lh3.googleusercontent.com/a/ACg8ocLYBKtkUCpVqM_vGh0uzEG78sCcvzX_S04wNSznPcQV8E9L3jpH=s96-c"
+      },
+      "id": "881a"
+    },
+    {
+      "id": "114579800949774851331",
+      "name": "israel  david",
+      "last_name": "polo arias",
+      "email": "israeldavidsdvsf@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIJlpdeCXkMAZ2zmbiCrviFCUi6TDGs2r2V9TSFWOGZ_u7-sMvk=s96-c"
+    },
+    {
+      "id": "114579800949774851331",
+      "name": "israel  david",
+      "last_name": "polo arias",
+      "email": "israeldavidsdvsf@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIJlpdeCXkMAZ2zmbiCrviFCUi6TDGs2r2V9TSFWOGZ_u7-sMvk=s96-c"
+    },
+    {
+      "id": "6e1a",
+      "email": "correo@correo.com",
+      "password": "Celic@121"
+    },
+    {
+      "id": "118422086166722814745",
+      "name": "ISRAEL DAVID",
+      "last_name": "POLO ARIAS",
+      "email": "israel.polo@cun.edu.co",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocLYBKtkUCpVqM_vGh0uzEG78sCcvzX_S04wNSznPcQV8E9L3jpH=s96-c"
+    },
+    {
+      "id": "109694827407418212919",
+      "name": "scs",
+      "email": "samariancleversolutions@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIjZZeY0eXIP4bIHhaPEZAJw_wLGUfNYrQlwGC4nBBN4mtevGw=s96-c"
+    },
+    {
+      "id": "493f",
+      "email": "correo@correo.com",
+      "password": "Celic@121"
+    }
+  ]
+}
