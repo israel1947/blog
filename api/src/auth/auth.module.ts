@@ -5,7 +5,6 @@ import { User, UserSchema } from 'src/models/user';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersService } from '../users/users.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { jwtConstants } from 'src/constants/jws';
 
 @Module({
   imports:[
