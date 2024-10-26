@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Dto } from 'src/dto/dto';
+import { UserDto } from 'src/dto/userDto';
 import { User } from 'src/models/user';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
@@ -16,7 +16,7 @@ export class AuthService {
 
   @InjectModel(User.name) private userModel: Model<User>;
 
-  async createUser(createUserDto: Dto): Promise<User> {
+  async createUser(createUserDto: UserDto): Promise<User> {
     const possibleUser = await this.userModel.findOne({ email: createUserDto.email });
     if (possibleUser) {
       throw new ConflictException("This email is already in use.");

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Dto } from 'src/dto/dto';
+import { UserDto } from 'src/dto/userDto';
 import { User } from 'src/models/user';
 import * as bcrypt from 'bcrypt';
 
@@ -25,7 +25,7 @@ export class UsersService {
     return this.userModel.findById({ _id: _id });
   }
 
-  async updateUser(id: string, updateUser: Dto): Promise<User[] | null> {
+  async updateUser(id: string, updateUser: UserDto): Promise<User[] | null> {
     const userId = new Types.ObjectId(id);
     const hassPass = await bcrypt.hash(updateUser.password, 10)
     const userData = await this.userModel.findById(userId);

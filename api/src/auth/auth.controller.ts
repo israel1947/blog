@@ -1,17 +1,24 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Response, Request } from 'express';
-import { Dto } from 'src/dto/dto';
+import { UserDto } from 'src/dto/userDto';
 import { AuthService } from './auth.service';
-import { User } from 'src/models/user';
 import { AuthGuard } from './auth.guard';
+import { LoginDto } from 'src/dto/loginDto';
 
 @Controller('auth')
 export class AuthController {
 
   constructor(private readonly authService: AuthService) { }
   
+  @UsePipes(new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  }))
   @Post('/create')
-  async createUser(@Body() userData: Dto, @Res() resp: Response) {
+  async createUser(@Body() userData: UserDto, @Res() resp: Response) {
 
     try {
       const createUser = await this.authService.createUser(userData);
@@ -24,7 +31,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('/login')
-  async singIn(@Body() singInDto:User, @Res() resp: Response){
+  async singIn(@Body() singInDto:LoginDto, @Res() resp: Response){
     try {
       const singInUser = await this.authService.login(singInDto.email, singInDto.password);
       resp.send({ok:true, message:"Correct login!", user: singInUser})

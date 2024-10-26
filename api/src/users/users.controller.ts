@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
-import { Dto } from 'src/dto/dto';
+import { UserDto } from 'src/dto/userDto';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
@@ -17,7 +17,7 @@ export class UsersController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  async updateUser(@Param('id') id: string, @Res() resp: Response, @Body() userData: Dto) {
+  async updateUser(@Param('id') id: string, @Res() resp: Response, @Body() userData: UserDto) {
     try {
       const updatedUser  = await this.userService.updateUser(id, userData);
       resp.send({ ok: true, messge: "User Updated Susscefully!", user: updatedUser  }); 
@@ -39,7 +39,6 @@ export class UsersController {
       const user = await this.userService.findUserById(id);
       resp.send({ ok: true, user: user });
     } catch (error) {
-      console.error(error);
       resp.status(404).send({ ok: false, message: error.message });
     };
   };

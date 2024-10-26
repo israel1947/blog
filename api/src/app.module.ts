@@ -5,13 +5,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { PostsModule } from './posts/posts.module';
 
 
 @Module({
   imports: [
     UsersModule,
     ConfigModule.forRoot({isGlobal: true,}), 
-    MongooseModule.forRoot(process.env.db,{dbName:process.env.DB_NAME}), AuthModule
+    MongooseModule.forRoot(process.env.db,{dbName:process.env.DB_NAME}), 
+    AuthModule, 
+    PostsModule
   ],
   controllers: [AppController],
   providers: [AppService],

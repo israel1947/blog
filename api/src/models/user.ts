@@ -25,6 +25,14 @@ export class User{
   @ApiProperty({required:false})
   @Prop({required:false})
   photo:string;
+
+  @ApiProperty({required:false})
+  @Prop({required:false, default: false})
+  suscription:boolean;
+
+  @ApiProperty({required:false})
+  @Prop({required:false, default: 'User'})
+  role:string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
