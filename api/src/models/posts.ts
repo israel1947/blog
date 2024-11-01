@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ApiProperty } from "@nestjs/swagger";
 import { HydratedDocument } from "mongoose";
+import slugify from "slugify";
 
 export type PostsDocument = HydratedDocument<Posts>;
 
@@ -51,6 +52,14 @@ export class Posts {
   @ApiProperty()
   @Prop({ required: true })
   user_id: string;
+
+  @ApiProperty()
+  @Prop({ required: true, unique: true })
+  friendlyId: string;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Posts);
+
+PostSchema.pre<Posts & Document>('save', function () {
+  this.friendlyId = slugify(this.title, { lower: true });
+});

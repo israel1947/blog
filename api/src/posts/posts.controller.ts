@@ -9,6 +9,7 @@ import * as multer from 'multer';
 import * as path from 'path';
 import * as uniqid from 'uniqid';
 import { FilterPostsDto } from 'src/dto/filterPostsDto';
+import { Posts } from 'src/models/posts';
 
 @Controller('posts')
 export class PostsController {
@@ -53,7 +54,7 @@ export class PostsController {
   }
 
   @Get()
-  async getPots(@Query() params: FilterPostsDto, @Res() res: Response){
+  async getPosts(@Query() params: FilterPostsDto, @Res() res: Response){
     try {
       const result = await this.postsService.getAllPosts(params);
       return res.json(result);
@@ -65,7 +66,7 @@ export class PostsController {
 
 
 
-  @Get(':img')
+   @Get('image/:img')
   async getImgById(@Res() resp: Response, @Param('img') img: string) {
     try {
       const pathImage = await this.fileSystem.getImgByUrl(img);
@@ -77,5 +78,10 @@ export class PostsController {
     } catch (error) {
       resp.status(500).send({ ok: false, message: "Internal Server Error" });
     }
-  }
+  } 
+
+  @Get(':friendlyId')
+  async getPostById(@Param('friendlyId') friendlyId: string): Promise<Posts>{
+    return this.postsService.getPostById(friendlyId);
+  };
 }

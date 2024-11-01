@@ -6,17 +6,19 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
+import { CommentsModule } from './comments/comments.module';
 
 
 @Module({
   imports: [
     UsersModule,
-    ConfigModule.forRoot({isGlobal: true,}), 
-    MongooseModule.forRoot(process.env.db,{dbName:process.env.DB_NAME}), 
-    AuthModule, 
-    PostsModule
+    ConfigModule.forRoot({ isGlobal: true, }),
+    MongooseModule.forRoot(process.env.db, { dbName: process.env.DB_NAME }),
+    AuthModule,
+    PostsModule,
+    CommentsModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
