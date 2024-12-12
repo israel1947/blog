@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Query, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
 import { UserDto } from 'src/dto/userDto';
@@ -12,6 +12,16 @@ export class UsersController {
   @Get()
   getAllUsers() {
     return this.userService.findAllUsers();
+  };
+
+  @Get('user')
+  async getUserByEmail(@Query('email') email: string, @Res() resp: Response) {
+    try {
+      const user = await this.userService.findOne(email);
+      resp.send({ ok: true, user: user });
+    } catch (error) {
+      resp.status(404).send({ ok: false, message: error.message });
+    };
   };
 
 

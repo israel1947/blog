@@ -16,7 +16,7 @@ export class AuthService {
 
   @InjectModel(User.name) private userModel: Model<User>;
 
-  async createUser(createUserDto: UserDto): Promise<User> {
+  async createUser(createUserDto: UserDto): Promise<{ access_token: string }> {
     const possibleUser = await this.userModel.findOne({ email: createUserDto.email });
     if (possibleUser) {
       throw new ConflictException("This email is already in use.");
@@ -26,7 +26,16 @@ export class AuthService {
       ...createUserDto,
       password: hassPass
     });
-    return createUser.save();
+    const user = await createUser.save();
+
+    //jwt
+    const { password, ...userWithoutPassword } = user.toObject();
+    const payload = { ...userWithoutPassword };
+
+    return {
+      access_token: await this.jwtService.signAsync(payload, { secret: process.env.SECRET }),
+    }
+
   }
 
   async login(email: string, pass: string): Promise<{ access_token: string }> {

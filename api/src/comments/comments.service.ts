@@ -20,8 +20,18 @@ export class CommentsService {
     return this.commentsModel.find().exec();
   };
 
-  async countCommentsForPost(postId: string): Promise<number> {
-    return this.commentsModel.countDocuments({ post_id: new Types.ObjectId(postId) }).exec();
+  async countCommentsForPost(postIds: string[]): Promise<number[]> {
+    /* return this.commentsModel.countDocuments({ post_id: new Types.ObjectId(postId) }).exec(); */
+
+    const counts = await Promise.all(
+      postIds.map(async (id) => {
+        return this.commentsModel.countDocuments({post_id: new Types.ObjectId(id) }).exec();
+      })
+    );
+    return counts;
   }
 
+  async getCommentsForId(postId: string):Promise<Comments[]>{
+    return this.commentsModel.find({post_id: postId}).exec();
+  }
 }

@@ -12,5 +12,15 @@ export class FileSystemService {
       return null;
     }
     return pathImage;
+  };
+
+  async getImgProfileByUrl(img: string) {
+    const pathImage = path.resolve(__dirname, '../../../uploads/user/profile', img);
+    const exist = fs.existsSync(pathImage);
+    if (!exist) {
+      console.log("Error: the image does not exist");
+      return null;
+    }
+    return pathImage;
   }
 }

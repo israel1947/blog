@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, UseGuards, UseInterceptors, Param, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UploadedFiles, Req, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards, UseInterceptors, Param, ParseFilePipe, FileTypeValidator, UploadedFiles, Req, Query } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { PostDto } from 'src/dto/postsDto';
 import { PostsService } from './posts.service';
@@ -14,13 +14,13 @@ import { Posts } from 'src/models/posts';
 @Controller('posts')
 export class PostsController {
 
-  constructor(private postsService: PostsService, private fileSystem: FileSystemService) { };
+  constructor(private readonly postsService: PostsService, private fileSystem: FileSystemService) { };
 
 
 
   @UseGuards(AuthGuard)
   @Post('/create')
-  @UseInterceptors(FilesInterceptor('images',3,{
+  @UseInterceptors(FilesInterceptor('images', 3, {
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
         const uploadPath = path.resolve(__dirname, '../../uploads');
@@ -43,8 +43,8 @@ export class PostsController {
     })
   ) files: Array<Express.Multer.File>, @Body() postData: PostDto, @Res() resp: Response) {
     try {
-      
-      postData.images = files.map((e)=> {return e.filename});
+
+      postData.images = files.map((e) => { return e.filename });
       const createPost = await this.postsService.createPost(postData)
       resp.send({ ok: true, message: "Post Created sussefully!", post: createPost });
 
@@ -53,20 +53,22 @@ export class PostsController {
     }
   }
 
-  @Get()
-  async getPosts(@Query() params: FilterPostsDto, @Res() res: Response){
+  @Get('search')
+  async getpostsByCategory(@Query('category') category: string, @Res() resp: Response) {
+
+    if (!category) {
+      return resp.status(400).json({ ok: false, message: 'Category is required' });
+    }
+
     try {
-      const result = await this.postsService.getAllPosts(params);
-      return res.json(result);
+      const postsData = await this.postsService.getPostByCategory(category);
+      return resp.status(200).json({ ok: true, posts: postsData });
     } catch (error) {
-      return res.status(500).json({ ok: false, message: 'Error fetching posts' });
+      return resp.status(204).json({ ok: false, message: error.message });
     }
   }
 
-
-
-
-   @Get('image/:img')
+  @Get('image/:img')
   async getImgById(@Res() resp: Response, @Param('img') img: string) {
     try {
       const pathImage = await this.fileSystem.getImgByUrl(img);
@@ -78,10 +80,25 @@ export class PostsController {
     } catch (error) {
       resp.status(500).send({ ok: false, message: "Internal Server Error" });
     }
-  } 
+  }
 
   @Get(':friendlyId')
-  async getPostById(@Param('friendlyId') friendlyId: string): Promise<Posts>{
-    return this.postsService.getPostById(friendlyId);
+  async getPostById(@Param('friendlyId') friendlyId: string, @Res() resp: Response) {
+    try {
+      const data = await this.postsService.getPostById(friendlyId);
+      return resp.json(data);
+    } catch (error) {
+      return resp.status(500).json({ ok: false, message: error });
+    }
   };
+
+  @Get()
+  async getPosts(@Query() params: FilterPostsDto, @Res() res: Response) {
+    try {
+      const result = await this.postsService.getAllPosts(params);
+      return res.json(result);
+    } catch (error) {
+      return res.status(500).json({ ok: false, message: 'Error fetching posts' });
+    }
+  }
 }
