@@ -1,6 +1,6 @@
 <article>
   <div class="content-img">
-    <img [src]="postData?.image" [alt]="postData?.title">
+    <img [src]="postData.images?.[0] | imagen " [alt]="postData.title">
   </div>
   <div class="flex items-center p-8 max-[768px]:flex-col">
     <div class="content">
@@ -12,7 +12,7 @@
           <div class="content-info flex items-center gap-1">
             <div class="content-img">
               <div class="img-perfil w-[48px] h-[48px] rounded-[50%] bg-cover bg-no-repeat object-center"
-                [ngStyle]="{'background-image': 'url(' + userData?.photo + ')'}"></div>
+                [ngStyle]="{'background-image': 'url(' + (userData?.photo | imagenProfile ) + ')'}"></div>
             </div>
             <div class="perfil flex justify-between">
               <div class="name-perfil  flex flex-col gap-1">
@@ -21,7 +21,7 @@
                 <div class="reviews-post flex items-center justify-between">
                   <div class="perfil-reactions flex items-center gap-2">
                     <button (click)="like()"><i class="ri-thumb-up-line ri-xl">{{postData?.likes}}</i></button>
-                    <button (click)="coments()"><i class="ri-chat-3-line ri-xl">{{postData?.comments}}</i></button>
+                    <button (click)="coments()"><i class="ri-chat-3-line ri-xl">{{postData?.comments}}</i> {{postData?.comments}}</button>
                     @if (showFiller) {
                     <app-coments class="absolute right-0 top-0 h-[100vh]" [comentData]="comentData"
                       (valueClickClose)="close($event)"></app-coments>
@@ -35,7 +35,7 @@
           <div class="category-post flex flex-col gap-2">
             <div class="category-title flex items-center gap-2">
               <strong class="text-blue-600">{{postData?.category}}</strong>
-              <span>{{postData?.last_read_at | customDate}} read</span>
+              <span>{{postData?.last_read_at}} read</span>
             </div>
             <div class="perfil-actions flex items-center justify-end gap-2">
               <button (click)="savePost()"><i class="ri-bookmark-line ri-xl"></i></button>

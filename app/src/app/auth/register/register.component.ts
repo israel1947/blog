@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VaidatorService } from '../../shared/vaidator.service';
@@ -20,20 +20,24 @@ export class RegisterComponent {
 
   showPassword: boolean = false;
   isLoading = false;
-  selectedFileBase64: string | null = null; 
+  selectedFileBase64: string | null = null;
+
+  selectedFile: File | null = null;
 
   private authService: AuthService = inject(AuthService);
   private formBilder: FormBuilder = inject(FormBuilder);
   private validatorServices: VaidatorService = inject(VaidatorService);
   private emailValidatorServices: EmailValidatorService = inject(EmailValidatorService);
   private snackBarService: SnackbarService = inject(SnackbarService);
+  readonly dialogRef = inject(MatDialogRef<RegisterComponent>);
 
   registerForm: FormGroup = this.formBilder.group({
     name: ['', [Validators.required, Validators.pattern(this.validatorServices.username)]],
     last_name: ['', [Validators.required, Validators.pattern(this.validatorServices.username)]],
-    email: ['', [Validators.required, Validators.pattern(this.validatorServices.emailPattern)], [this.emailValidatorServices.validate.bind(this.emailValidatorServices)]],
+    email: ['', [Validators.required, Validators.pattern(this.validatorServices.emailPattern)] /* [this.emailValidatorServices.validate.bind(this.emailValidatorServices)] */],
     password: ['', [Validators.required, Validators.pattern(this.validatorServices.passwordPattern)]],
-    photo: ['']
+    photo: [null],
+    suscription: [false]
   });
 
   valiedField(field: string) {
@@ -48,41 +52,47 @@ export class RegisterComponent {
     return this.validatorServices.passwordErrorMessage(this.registerForm);
   };
 
-
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.selectedFileBase64 = reader.result as string; // Almacenar el archivo en base64
-      };
-      reader.readAsDataURL(file); //archivo convertido  a base64
+  onFileSelected(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput?.files?.length) {
+      this.selectedFile = fileInput.files[0];
+      this.registerForm.patchValue({ photo: this.selectedFile });
     }
   }
 
-  register() {
+  async register() {
     if (this.registerForm.invalid) {
       this.snackBarService.alertBar('All field is required', 'Aceptar');
       this.registerForm.markAllAsTouched();
       return;
     }
 
-    const formData = {
-      ...this.registerForm.value,
-      photo: this.selectedFileBase64 // Agregando base64 al form
-    };
-
-    this.isLoading = !this.isLoading;
-    this.authService.createUser(formData).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.snackBarService.alertBar('User created sussefully!', 'Aceptar');
-        this.registerForm.reset();
-        this.selectedFileBase64 = null;
-      }, error: (err) => {
-        this.snackBarService.alertBar('Failed to create user.', 'Aceptar');
+    const formData = new FormData();
+    const formFields = ['name', 'last_name', 'email', 'password', 'suscription'];
+    formFields.map(field=>{
+      const value = this.registerForm.get(field)?.value;
+      if (value) {
+       formData.append(field,value); 
       }
     });
+
+    const photo = this.registerForm.get('photo')?.value;
+     if (photo) {
+       formData.append('photo', photo); // add file
+     }
+
+    this.isLoading = !this.isLoading;
+    console.log(formData);
+    const regiasterValid = await this.authService.createUser(formData);
+    if (regiasterValid) {
+      this.isLoading = false;
+      this.snackBarService.alertBar('User created sussefully!', 'Aceptar');
+      this.registerForm.reset();
+      this.dialogRef.close(true);
+      window.location.reload();
+    } else {
+      this.snackBarService.alertBar('Failed to create user.', 'Aceptar');
+    }
   }
 
   togglePasswordVisibility() {

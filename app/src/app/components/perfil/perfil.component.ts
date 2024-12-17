@@ -1,25 +1,52 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { responseData } from '../../interfaces/interface';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { responseData, User } from '../../interfaces/interface';
+import { AuthService } from '../../auth/auth.service';
+import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
+import { MatButtonModule } from '@angular/material/button';
+import { SnackbarService } from '../../shared/snackbar.service';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ImagenProfilePipe, MatButtonModule],
   templateUrl: './perfil.component.html',
-  styleUrl: './perfil.component.scss'
+  styleUrl: './perfil.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PerfilComponent implements OnInit {
   isOpen: Boolean = false;
-  perfil: responseData | null = null;
+  perfil: responseData | null | any = null;
   randomColor: string = '';
 
+  user: Partial<responseData> = {}
+
+  private readonly authService: AuthService = inject(AuthService);
+  private snakService: SnackbarService = inject(SnackbarService);
+
   ngOnInit(): void {
+    this.loadProfile();
+  }
+
+  async loadProfile() {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.perfil = JSON.parse(storedUser);
+      this.randomColor = this.generateRandomColor();
     }
-    this.randomColor = this.generateRandomColor();
+    this.getUserData();
+  }
+
+  async getUserData() {
+    this.user = await this.authService.getUser();
   }
 
   getInitials(name: string | undefined, lastName: string | undefined): string {
@@ -39,5 +66,14 @@ export class PerfilComponent implements OnInit {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+
+  async logout() {
+    this.snakService.openDialog().afterClosed().subscribe(async(close:boolean)=>{
+      if (close) {
+        await this.authService.clearSession();
+        window.location.reload();
+      }
+    });
   }
 }

@@ -1,7 +1,9 @@
 @if (cardType === 'primary') {
-<div [class]="classType" [routerLink]="['/post', post.id]">
+<div [class]="classType" [routerLink]="['/post', post.friendlyId]">
   <div class="container-card--img basis-[40%]">
-    <img class="rounded-[8px]" [src]="post.image" [alt]="post.title">
+    <div class="h-[100px] w-[160px] rounded-[8px] bg-cover bg-no-repeat bg-center" 
+    [ngStyle]="{'background-image': 'url(' + (post.images?.[0] | imagen)  + ')'}" [routerLink]="['/post', post.friendlyId]">
+  </div>
   </div>
   <div class="card-content w-[200] basis-[60%]">
     <div class="container-card--info flex flex-col gap-2">
@@ -14,7 +16,7 @@
       </div>
       <div class="container-card--tag flex content-center justify-between">
         <strong class="text-blue-400">{{post.category}}</strong>
-        <span class="text-gray-400">{{post.last_read_at | customDate}} read</span>
+        <span class="text-gray-400">{{post.last_read_at }}</span>
       </div>
     </div>
   </div>
@@ -23,7 +25,7 @@
 }
 
 @if (cardType === 'secondary') {
-<div [class]="classType" [routerLink]="['/post', post.id]">
+<div [class]="classType" [routerLink]="['/post', post.friendlyId]">
   <div class="card-content w-[200]">
     <div class="container-card--info flex flex-col gap-2">
       <div class="container-card--title flex content-center justify-between">
@@ -35,7 +37,7 @@
       </div>
       <div class="container-card--tag flex content-center justify-between">
         <strong class="text-blue-400">{{post.category}}</strong>
-        <span class="text-gray-400">{{post.last_read_at | customDate}} read</span>
+        <span class="text-gray-400">{{post.last_read_at}}</span>
       </div>
     </div>
   </div>
@@ -45,8 +47,8 @@
 
 @if (cardType === 'tertiary') {
 <div class="relative max-w-md rounded-lg overflow-hidden shadow-lg cursor-pointer mb-2"
-  [routerLink]="['/post', post.id]">
-  <img [src]="post.image" [alt]="post.title" class="w-full h-48 object-cover">
+  [routerLink]="['/post', post.friendlyId]">
+  <img [src]="post.images?.[0]  | imagen" [alt]="post.title" class="w-full h-48 object-cover">
   <!-- Capa oscura encima de la imagen -->
   <div class="absolute inset-0 bg-black bg-opacity-50"></div>
   <div class="absolute inset-0 p-4 text-white flex flex-col justify-between">
@@ -61,7 +63,7 @@
     <div class="flex items-center justify-between text-sm">
       <a href="#" class="text-blue-400 font-semibold">{{post.category}}</a>
       <div class="flex items-center">
-        <span class="mr-2">{{post.last_read_at | customDate}} read</span>
+        <span class="mr-2">{{post.last_read_at}}</span>
       </div>
     </div>
   </div>

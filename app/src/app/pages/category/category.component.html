@@ -1,0 +1,24 @@
+<div class="w-[100%] px-[1rem] mt-8 ">
+  <div class="container--carrucel">
+    <app-carrucel [slideData2]="carrucelCategory" />
+  </div>
+
+  <div class="flex flex-col gap-4 mt-4">
+    @if (latesNewsCategory.length >0) {
+    <h2 class="text-3xl font-bold mb-4">Lates News</h2>
+    }
+    @for (postlatesNews of latesNewsCategory.slice(); track $index) {
+    <app-card [cardType]="'primary'" [post]="postlatesNews" [classType]="clasType2Card"></app-card>
+    }
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 mt-4 w-[100%] max-[900px]:grid-cols-1">
+    @for (posts of postsCategory; track $index) {
+    <app-card [cardType]="'secondary'" [post]="posts" [classType]="clasType2Card"></app-card>
+    }
+  </div>
+
+  <div class="btn-more content-center text-center m-8">
+    <button class="text-blue-600 bg-slate-300 p-2 font-bold rounded-[15px]">More</button>
+  </div>
+</div>

@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CustomDatePipe } from '../../pipes/custom-date.pipe';
-import { CarrucelData, User } from '../../interfaces/interface';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CarrucelData } from '../../interfaces/interface';
+import { RouterModule } from '@angular/router';
 import { PostsService } from '../../services/posts.service';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 
 
 @Component({
   selector: 'app-carrucel',
   standalone: true,
-  imports: [CommonModule, CustomDatePipe, RouterModule],
+  imports: [CommonModule, RouterModule, ImagenPipe],
   templateUrl: './carrucel.component.html',
   styleUrl: './carrucel.component.scss'
 })
@@ -18,7 +19,7 @@ export class CarrucelComponent implements OnInit {
 
   @Input() slideData2!: CarrucelData[];
   currentIndex: number = 0;
-  userId!:number;
+  userId!: number;
   private postServices: PostsService = inject(PostsService);
 
   ngOnInit(): void {

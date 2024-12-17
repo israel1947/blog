@@ -5,8 +5,8 @@ export interface Posts {
 }
 
 export interface Comment {
-  id: number;
-  post_id: number;
+  _id: string;
+  post_id: string;
   author: string;
   author_photo: string;
   content: string;
@@ -14,9 +14,9 @@ export interface Comment {
 }
 
 export interface Post {
-  id: number;
+  _id: string;
   title: string;
-  image: string;
+  images: string[];
   description: string;
   tags: string[];
   created_at: Date;
@@ -26,18 +26,25 @@ export interface Post {
   views: number;
   category: string;
   user_id: number;
+  friendlyId?:string
 }
 
 export interface User {
-  id: number;
+  _id: string;
   name: string;
   last_name: string;
   email: string;
   password?: string;
   photo: string;
+  suscription?:boolean;
+  role?:string;
 }
 
-export interface GoogleUser extends Omit<User, 'id'>{
+export interface UserPost extends Omit<User,'photo'|'_id'>{
+  photo:File
+}
+
+export interface GoogleUser extends Omit<User, '_id'>{
   id:string
 }
 
@@ -46,19 +53,31 @@ export interface CarrucelData {
   id: number,
   title: string,
   author: User,
-  image: string,
+  images: string[],
   created_at: string,
   last_read_at: string,
   description: string,
   category?: string
   user_id: number;
+  friendlyId?:string
 }
 
 export interface responseData {
-  id: string,
+  _id: string,
   name: string,
   last_name: string,
   email: string,
-  photo: string,
+  photo?: string,
+  suscription:boolean,
+  role:string,
+  
 }
+
+export interface responseDataPosts {
+  ok:boolean,
+  page:number,
+  posts:Array<Post>
+}
+
+export interface responseDataPostsByCategory extends Omit<responseDataPosts,'page'> {}
 

@@ -2,16 +2,16 @@
   @for(slidea of slideData2.slice(-5); track $index ){
   <div class="relative max-[900px]:w-[100%]" *ngIf="$index === currentIndex">
     <div class="carrucel-content w-[100%] h-[57vh] rounded bg-cover bg-no-repeat object-center cursor-pointer"
-      [ngStyle]="{'background-image': 'url(' + slidea.image + ')'}" [routerLink]="['/post', slidea.id]">
+      [ngStyle]="{'background-image': 'url(' + (slidea?.images?.[0] | imagen)  + ')'}" [routerLink]="['/post', slidea.friendlyId]">
     </div>
     <div
       class="carrucel-info absolute left-0 bottom-0 w-[300px] p-2 backdrop-opacity-10 backdrop-invert bg-white/30 rounded-xl">
       <div class="title flex justify-between">
         <h2 class="font-bold text-blue-600">{{slidea.author?.name || 'Cargando...'}} {{slidea.author?.last_name}}</h2>
-        <span>{{slidea.last_read_at | customDate}} ago</span>
+        <span>{{slidea.last_read_at}} ago</span>
       </div>
       <div class="description my-3 flex flex-col gap-2">
-        <h3 class="font-bold text-blue-600 cursor-pointer" [routerLink]="['/post', slidea.id]">{{slidea.title}}</h3>
+        <h3 class="font-bold text-blue-600 cursor-pointer" [routerLink]="['/post', slidea.friendlyId]">{{slidea.title}}</h3>
         <p class="card-text">{{slidea.description}}</p>
       </div>
       <div class="acctions flex justify-between items-center">
@@ -21,12 +21,13 @@
           <button (click)="prevBnt(slidea,$index)"><i class="ri-arrow-left-s-line ri-3x"></i></button>
           }
 
-          @if($index <= slideData2.length-2 ){ <button (click)="nextBtn(slidea,$index)"><i
-              class="ri-arrow-right-s-line ri-3x"></i></button>
+          @if($index <= slideData2.length-2 ){ 
+            <button (click)="nextBtn(slidea,$index)"><i class="ri-arrow-right-s-line ri-3x"></i></button>
             }
         </div>
       </div>
     </div>
   </div>
   }
+
 </section>

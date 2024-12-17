@@ -68,10 +68,17 @@
           Imagen <span class="text-gray-400 font-normal">(Opcional)</span>
         </label>
         <div class="relative">
-          <input type="file" accept="image/*"
+          <input type="file" accept="image/jpeg"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-imagen" formControlName="photo" (change)="onFileSelected($event)">
+            id="grid-imagen" (change)="onFileSelected($event)">
         </div>
+      </div>
+
+      <!--TODO suscription INPUT-->
+      <div class="flex items-center mb-2 w-full px-3">
+        <input id="link-checkbox" type="checkbox" value=""
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" formControlName="suscription">
+        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I want to receive notifications of our posts.</label>
       </div>
 
 
@@ -86,9 +93,9 @@
               <span class="bar"></span>
               <span class="bar"></span>
               <span class="bar"></span>
-          </div>
+            </div>
           </ng-container>
-      
+
           <!-- Mostrar el texto del botón si no está cargando -->
           <ng-template #buttonText>
             Create account
@@ -105,7 +112,7 @@
 
     <!--TODO CREATE ACCOUNT WITG GOOGLE BTN -->
     <div class="flex flex-wrap -mx-3 mb-6 flex-col items-center mt-6">
-      <app-login-with-social-media/>
+      <app-login-with-social-media />
     </div>
   </form>
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PostsService } from '../../services/posts.service';
 import { ActivatedRoute } from '@angular/router';
 import { Comment, Post, User } from '../../interfaces/interface';
@@ -6,28 +6,38 @@ import { CommonModule } from '@angular/common';
 import { CustomDatePipe } from '../../pipes/custom-date.pipe';
 import { MatChipsModule } from '@angular/material/chips';
 import { ComentsComponent } from '../../components/coments/coments.component';
+import { ImagenPipe } from '../../pipes/imagen.pipe';
+import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
+import { response } from 'express';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [CommonModule, CustomDatePipe, MatChipsModule, ComentsComponent],
+  imports: [CommonModule, CustomDatePipe, MatChipsModule, ComentsComponent, ImagenPipe, ImagenProfilePipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
-export class PostComponent {
-  postData: Post | undefined;
+export class PostComponent implements OnInit {
+  postData: Partial<Post> = {};
   userData: User | undefined;
-  comentData: Comment[] = [];
+  comentData: Partial<Comment>[]=[];
   route: ActivatedRoute = inject(ActivatedRoute);
   showFiller = false;
-  userId!:number;
+  userId!: any;
+  post_id!: any;
+
 
   constructor(private postServices: PostsService, private comentsService: PostsService) {
+
+  }
+
+  ngOnInit(): void {
     const postDetailId = this.route.snapshot.params['id'];
 
-    this.postServices.getPostById(postDetailId).subscribe((post) => {
-      this.postData = post;
-      this.userId = post.user_id;
+    this.postServices.getPostById(postDetailId).subscribe((response) => {
+      this.postData = response.post;
+      this.userId = this.postData.user_id;
+      this.post_id = this.postData._id;
       if (this.userId) {
         this.postServices.getProfilUser(this.userId).subscribe((users: User[]) => {
           users.map((resp) => {
@@ -36,8 +46,8 @@ export class PostComponent {
         });
       }
     });
-  }
 
+  }
 
   savePost() {
     console.log("save");
@@ -52,10 +62,9 @@ export class PostComponent {
   };
 
   coments() {
-    const comentDetailId = parseInt(this.route.snapshot.params['id'], 10);
-    this.comentsService.getComments(comentDetailId).subscribe((coments: Comment[]) => {
-      this.comentData = coments.filter(comment => comment.post_id === comentDetailId);
-    });
+    this.comentsService.getComments(this.post_id).subscribe((response)=>{
+      this.comentData = response.comments;
+    })
     this.showFiller = !this.showFiller;
   };
 

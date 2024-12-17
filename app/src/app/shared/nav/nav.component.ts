@@ -53,5 +53,4 @@ export class NavComponent implements OnInit {
     dialogRef.afterClosed()
   }
 
- 
 }

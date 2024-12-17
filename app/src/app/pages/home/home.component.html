@@ -9,55 +9,62 @@
 
 <section class="w-[100%] px-[1rem] mt-8 ">
   @if (isLoading) {
-  <div class="spinner-container">
+  <!-- <div class="spinner-container">
     <mat-spinner></mat-spinner>
-  </div>
+  </div> -->
+  <app-skeleton />
   }
   @if (posts.length>0) {
+  @if (tabName === 'All') {
   <div #slide class="slideStyle max-[900px]:flex-col">
     <div class="container--carrucel basis-[60%]">
       <app-carrucel [slideData2]="slideData" />
     </div>
+
+
     <div #cont2r class="container--cards">
-      @for (post of posts.slice(-3); track $index) {
-      <app-card [cardType]="'primary'" [classType]="pba ? clasType2Card : clasTypeCard" [post]="post" />
+      @for (post of posts.slice(4,7); track $index) {
+      <app-card [cardType]="'primary'" [post]="post" />
       }
     </div>
   </div>
+
+  @if (WeeklyHighlight.length >=1 || latesNews.length >=1 || mostViews.length >=1) {
+  <div class="mostRead w-[100%] px-[1rem] mt-8 grid grid-cols-3 gap-4 max-md:grid-cols-2 max-[500px]:grid-cols-1 ">
+    <div class="flex flex-col gap-4 basis-[20%]">
+      <h2 class="text-3xl font-bold mb-4">Most Read</h2>
+      @for (postMostViews of mostViews.slice(); track $index) {
+      <app-card [cardType]="'primary'" [post]="postMostViews" [classType]="clasType2Card"></app-card>
+      }
+    </div>
+
+    @if (latesNews.length >=1) {
+    <div class="flex flex-col gap-4 basis-[60%]">
+      <h2 class="text-3xl font-bold mb-4">Lates News</h2>
+      @for (postlatesNews of latesNews.slice(); track $index) {
+      <app-card [cardType]="'secondary'" [post]="postlatesNews" [classType]="clasType2Card"></app-card>
+      }
+    </div>
+    }
+
+
+    @if (WeeklyHighlight.length >=1 ) {
+    <div class="flex flex-col gap-4 basis-[20%]">
+      <h2 class="text-3xl font-bold mb-4">Weekly Highlight</h2>
+      @for (postWeeklyHighlight of WeeklyHighlight; track $index) {
+      <app-card [cardType]="'tertiary'" [post]="postWeeklyHighlight"></app-card>
+      }
+    </div>
+    }
+  </div>
+  }
+  } @else {
+  <app-category [category]="category" [postsCategory]="postsByCategory" [carrucelCategory]="slideData"
+    [latesNewsCategory]="latesNewsCategory"></app-category>
+  }
   }@else{
   <div class="flex items-center justify-center">
-    <h1 class="text-blue-500 font-bold text-3xl">No hay nada</h1>
-  </div>
-  } 
-</section>
-
-@if (WeeklyHighlight.length >=1 || latesNews.length >=1 || mostViews.length >=1) {
-<section class="mostRead w-[100%] px-[1rem] mt-8 grid grid-cols-3 gap-4 max-md:grid-cols-2 max-[500px]:grid-cols-1 ">
-  <div class="flex flex-col gap-4 basis-[20%]">
-    <h2 class="text-3xl font-bold mb-4">Most Read</h2>
-    @for (postMostViews of mostViews.slice(-3); track $index) {
-    <app-card [cardType]="'primary'"  [post]="postMostViews" [classType]="clasType2Card"></app-card>
-    <!-- <mat-divider></mat-divider> -->
-    }
-  </div>
-
-  @if (latesNews.length >=1) {
-  <div class="flex flex-col gap-4 basis-[60%]">
-    <h2 class="text-3xl font-bold mb-4">Lates News</h2>
-    @for (postlatesNews of latesNews.slice(-4); track $index) {
-    <app-card  [cardType]="'secondary'" [post]="postlatesNews" [classType]="clasType2Card"></app-card>
-    }
-  </div>
-  }
-
-
-  @if (WeeklyHighlight.length >=1 ) {
-  <div class="flex flex-col gap-4 basis-[20%]">
-    <h2 class="text-3xl font-bold mb-4">Weekly Highlight</h2>
-    @for (postWeeklyHighlight of WeeklyHighlight; track $index) {
-    <app-card  [cardType]="'tertiary'"  [post]="postWeeklyHighlight"></app-card>
-    }
+    <h1 class="text-blue-500 font-bold text-3xl">No hay posts con este categoria</h1>
   </div>
   }
 </section>
-}
