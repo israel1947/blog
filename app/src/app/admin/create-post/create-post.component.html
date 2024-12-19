@@ -1,0 +1,102 @@
+<div class="w-[100%] bg-slate-200 p-4">
+  <form [formGroup]="postForm" (ngSubmit)="publish()"
+    class="bg-white flex flex-col items-center mt-8 border border-slate-400 p-4 rounded-lg">
+    <div class="cover_form w-[100%]">
+      @if (previewImgCover) {
+      <img [src]="previewImgCover" alt="preview" class="preview-img w-[100%] ">
+      }
+      <div class="cover-presentation flex">
+        <div class="presentation">
+          <label for="file"
+            class="labelFile flex gap-2 justify-center items-center border-[2px] border-slate-300 rounded-[5px]  cursor-pointer p-2">
+            <span><i class="ri-upload-cloud-2-line ri-3x"></i></span>
+            @if (previewImgCover) {
+            <p>change a cover image</p>
+            }@else {
+            <p>Add a cover image</p>
+            }
+          </label>
+          <input class="input" name="file" id="file" type="file" accept="image/*"
+            (change)="onFileSelectedPreview($event)" />
+        </div>
+      </div>
+    </div>
+    <div class="article-form-title flex w-[100%]">
+      <textarea name="title" id="title" formControlName="title" placeholder="Post title here" autofocus
+        autocomplete="off" autocapitalize="on"
+        class="title font-bold text-[40px] mt-4 text-black h-auto min-h-[46px]  resize-none overflow-hidden"></textarea>
+    </div>
+    <div class="tags-form-post mt-4 flex flex-col w-[100%]" formArrayName="tags">
+      <input #tagInput (input)="onTagsInput($event)" type="text" class="tags" id="tags" placeholder="Add tags..."
+        autocomplete="off">
+      <div class="tags-container flex-wrap gap-2 mt-2">
+        <mat-chip-set>
+          @for (tag of tagsArray; track $index) {
+          <mat-chip>
+            {{ tag }}
+            <button type="button" class="remove-tag" (click)="removeTag(tag)">
+              <i class="ri-close-circle-fill"></i>
+            </button>
+          </mat-chip>
+          }
+        </mat-chip-set>
+      </div>
+    </div>
+
+    <div class="form-body w-[100%] flex flex-col">
+      <div class="form-body-toolbar w-[100%] flex items-center">
+        <button type="button" class="bg-none border-none p-4">
+          <i class="ri-bold ri-2x"></i>
+        </button>
+        <button type="button" class="bg-none border-none p-4">
+          <i class="ri-italic ri-2x"></i>
+        </button>
+        <button type="button" class="bg-none border-none p-4">
+          <i class="ri-list-ordered-2 ri-2x"></i>
+        </button>
+        <button type="button" class="bg-none border-none p-4">
+          <i class="ri-list-unordered ri-2x"></i>
+        </button>
+        <button type="button" class="bg-none border-none p-4">
+          <i class="ri-heading ri-2x"></i>
+        </button>
+        <button type="button" class="bg-none border-none p-4">
+          <i class="ri-double-quotes-l ri-2x"></i>
+        </button>
+        <button type="button" class="bg-none border-none p-4">
+          <i class="ri-code-view ri-2x"></i>
+        </button>
+        <button type="button" class="bg-none border-none p-4">
+          <i class="ri-link ri-2x"></i>
+        </button>
+
+        <div class="img-input">
+          <label for="file" class="labelFile flex gap-2 justify-center items-center cursor-pointer p-2">
+            <i class="ri-image-add-line ri-2x"></i>
+          </label>
+          <input class="input" name="text" id="file" type="file" accept="image/*" />
+        </div>
+      </div>
+
+      <div class="form-body-content w-[100%] h-[100%] flex">
+        <textarea name="description" id="description" placeholder="Write your posts content here..." autocomplete="off"
+          autocapitalize="on" class="title mt-4 text-black h-auto min-h-[150px]  resize-none overflow-hidden"
+          formControlName="description"></textarea>
+      </div>
+    </div>
+    <div class="post-last-read-at w-[100%]">
+      <input type="text" placeholder="Add to the reading time" class="reading-time mt-4 mb-4"
+        formControlName="last_read_at">
+    </div>
+    <div class="post-last-read-at w-[100%]">
+      <select class="reading-time mt-4 mb-4" formControlName="category">
+        @for (item of categorySelect; track $index) {
+        <option [value]="item">{{item}}</option>
+        }
+      </select>
+    </div>
+    <div class="post-btn-publish bg-slate-100 w-[100%]">
+      <button type="submit" class="font-medium p-4 bg-blue-500 text-white rounded-lg ">Publish</button>
+    </div>
+  </form>
+</div>

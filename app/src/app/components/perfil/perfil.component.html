@@ -1,5 +1,9 @@
 @if(perfil){
 <div class="avatar-perifl-img cursor-pointer flex items-center">
+  @if (user.role === 'Admin') {
+  <a [routerLink]="'/admin/create'" class="text-white bg-blue-400 p-2 font-medium rounded-[5px]">Write <i class="ri-edit-2-line"></i></a>
+  }
+
   <div class="img-perfil w-[48px] h-[48px] rounded-[50%] bg-cover bg-no-repeat object-center"
     [ngStyle]="{'background-image': 'url(' + (user.photo | imagenProfile) + ')'}">
   </div>
@@ -13,12 +17,11 @@
   <button (click)="funMenuPerfil()">
     <i class="ri-arrow-down-s-fill ri-xl text-white"></i>
   </button>
-
   @if (isOpen) {
   <div class="absolute right-0 mt-[15rem] w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50 ">
     <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+      <a [routerLink]="'/admin/dashboard'" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
         {{user.name | titlecase}} {{user.last_name | titlecase}}
       </a>
 

@@ -26,7 +26,7 @@ export interface Post {
   views: number;
   category: string;
   user_id: number;
-  friendlyId?:string
+  friendlyId?: string
 }
 
 export interface User {
@@ -36,16 +36,16 @@ export interface User {
   email: string;
   password?: string;
   photo: string;
-  suscription?:boolean;
-  role?:string;
+  suscription?: boolean;
+  role?: string;
 }
 
-export interface UserPost extends Omit<User,'photo'|'_id'>{
-  photo:File
+export interface UserPost extends Omit<User, 'photo' | '_id'> {
+  photo: File
 }
 
-export interface GoogleUser extends Omit<User, '_id'>{
-  id:string
+export interface GoogleUser extends Omit<User, '_id'> {
+  id: string
 }
 
 
@@ -59,7 +59,7 @@ export interface CarrucelData {
   description: string,
   category?: string
   user_id: number;
-  friendlyId?:string
+  friendlyId?: string
 }
 
 export interface responseData {
@@ -68,16 +68,27 @@ export interface responseData {
   last_name: string,
   email: string,
   photo?: string,
-  suscription:boolean,
-  role:string,
-  
+  suscription: boolean,
+  role: string,
+
 }
 
 export interface responseDataPosts {
-  ok:boolean,
-  page:number,
-  posts:Array<Post>
+  ok: boolean,
+  page: number,
+  posts: Array<Post>
 }
 
-export interface responseDataPostsByCategory extends Omit<responseDataPosts,'page'> {}
+export interface responseDataPostsByCategory extends Omit<responseDataPosts, 'page'> { }
 
+ export enum Category {
+  Negocios='Negocios',
+  Tecnologia='Tecnología',
+  testcategoria='test categoria',
+  Cultura='Cultura',
+  Salud='Salud',
+  Cocina='Cocina',
+  Finanzas='Finanzas',
+  DesarrolloPersonal='Desarrollo Personal',
+  Educacion='Educación'
+} 

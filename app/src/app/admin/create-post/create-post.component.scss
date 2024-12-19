@@ -1,0 +1,17 @@
+/* From Uiverse.io by escannord */ 
+.input {
+  max-width: 190px;
+  display: none;
+}
+
+textarea.title {
+  border: none; /* Sin borde inicialmente */
+  outline: none; /* Elimina el borde que aparece al hacer clic */
+  field-sizing: content;
+}
+textarea.title:focus,
+input.tags:focus,
+input.reading-time:focus {
+  outline: none; /* Sin borde en el estado de foco */
+}
+

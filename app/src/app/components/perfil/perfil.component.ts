@@ -13,16 +13,17 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, ImagenProfilePipe, MatButtonModule],
+  imports: [CommonModule, ImagenProfilePipe, MatButtonModule, RouterModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PerfilComponent implements OnInit {
+export class PerfilComponent {
   isOpen: Boolean = false;
   perfil: responseData | null | any = null;
   randomColor: string = '';
@@ -32,7 +33,7 @@ export class PerfilComponent implements OnInit {
   private readonly authService: AuthService = inject(AuthService);
   private snakService: SnackbarService = inject(SnackbarService);
 
-  ngOnInit(): void {
+  constructor(){
     this.loadProfile();
   }
 
