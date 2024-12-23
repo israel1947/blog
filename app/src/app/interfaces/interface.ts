@@ -29,6 +29,8 @@ export interface Post {
   friendlyId?: string
 }
 
+export interface PostRequest extends Omit<Post, 'comments' | 'likes' | 'views' | 'friendlyId' | '_id'> {}
+
 export interface User {
   _id: string;
   name: string;

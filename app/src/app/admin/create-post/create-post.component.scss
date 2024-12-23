@@ -15,3 +15,20 @@ input.reading-time:focus {
   outline: none; /* Sin borde en el estado de foco */
 }
 
+.loading-pencil{
+  width: 100vw;
+  height: 100vh;
+
+  position: absolute;
+  align-content: center;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: antiquewhite;
+  left: 0;
+
+  color: #000;
+}

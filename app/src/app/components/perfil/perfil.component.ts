@@ -1,18 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { responseData, User } from '../../interfaces/interface';
 import { AuthService } from '../../auth/auth.service';
 import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { SnackbarService } from '../../shared/snackbar.service';
-import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -23,7 +15,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './perfil.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PerfilComponent {
+export class PerfilComponent implements OnInit {
   isOpen: Boolean = false;
   perfil: responseData | null | any = null;
   randomColor: string = '';
@@ -33,11 +25,16 @@ export class PerfilComponent {
   private readonly authService: AuthService = inject(AuthService);
   private snakService: SnackbarService = inject(SnackbarService);
 
-  constructor(){
+  constructor(private changeDetettor: ChangeDetectorRef){}
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
     this.loadProfile();
+    
   }
 
-  async loadProfile() {
+   loadProfile() {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.perfil = JSON.parse(storedUser);
@@ -46,8 +43,13 @@ export class PerfilComponent {
     this.getUserData();
   }
 
-  async getUserData() {
-    this.user = await this.authService.getUser();
+   getUserData() {
+    this.authService.getUser().then((user)=>{
+      this.user = user;
+      this.changeDetettor.detectChanges();
+    }).catch((error)=>{
+
+    })
   }
 
   getInitials(name: string | undefined, lastName: string | undefined): string {

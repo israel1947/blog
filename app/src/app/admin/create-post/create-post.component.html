@@ -44,46 +44,9 @@
     </div>
 
     <div class="form-body w-[100%] flex flex-col">
-      <div class="form-body-toolbar w-[100%] flex items-center">
-        <button type="button" class="bg-none border-none p-4">
-          <i class="ri-bold ri-2x"></i>
-        </button>
-        <button type="button" class="bg-none border-none p-4">
-          <i class="ri-italic ri-2x"></i>
-        </button>
-        <button type="button" class="bg-none border-none p-4">
-          <i class="ri-list-ordered-2 ri-2x"></i>
-        </button>
-        <button type="button" class="bg-none border-none p-4">
-          <i class="ri-list-unordered ri-2x"></i>
-        </button>
-        <button type="button" class="bg-none border-none p-4">
-          <i class="ri-heading ri-2x"></i>
-        </button>
-        <button type="button" class="bg-none border-none p-4">
-          <i class="ri-double-quotes-l ri-2x"></i>
-        </button>
-        <button type="button" class="bg-none border-none p-4">
-          <i class="ri-code-view ri-2x"></i>
-        </button>
-        <button type="button" class="bg-none border-none p-4">
-          <i class="ri-link ri-2x"></i>
-        </button>
-
-        <div class="img-input">
-          <label for="file" class="labelFile flex gap-2 justify-center items-center cursor-pointer p-2">
-            <i class="ri-image-add-line ri-2x"></i>
-          </label>
-          <input class="input" name="text" id="file" type="file" accept="image/*" />
-        </div>
-      </div>
-
-      <div class="form-body-content w-[100%] h-[100%] flex">
-        <textarea name="description" id="description" placeholder="Write your posts content here..." autocomplete="off"
-          autocapitalize="on" class="title mt-4 text-black h-auto min-h-[150px]  resize-none overflow-hidden"
-          formControlName="description"></textarea>
-      </div>
+      <div id="editor-container" class="h-[200px]" style="height: 200px;"></div>
     </div>
+
     <div class="post-last-read-at w-[100%]">
       <input type="text" placeholder="Add to the reading time" class="reading-time mt-4 mb-4"
         formControlName="last_read_at">
@@ -95,8 +58,19 @@
         }
       </select>
     </div>
-    <div class="post-btn-publish bg-slate-100 w-[100%]">
-      <button type="submit" class="font-medium p-4 bg-blue-500 text-white rounded-lg ">Publish</button>
+    <!-- TODO: PUBLISH BTN -->
+    <div class="post-btn-publish bg-slate-100 w-[100%] flex gap-2">
+      <button type="submit" class="font-medium p-4 bg-blue-500 text-white rounded-lg" [disabled]="isLoading">
+        
+        <ng-template #buttonText>
+          Publish
+        </ng-template>
+        
+        <ng-container *ngIf="isLoading; else buttonText">
+          <app-loading-pencil class="loading-pencil"/>
+        </ng-container>
+        
+      </button>
     </div>
   </form>
 </div>

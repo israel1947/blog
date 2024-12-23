@@ -37,6 +37,13 @@ export class CarrucelComponent implements OnInit {
     }
   }
 
+  getExcerptWithHTML(content: any, limit: number): string {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
+    return tempDiv.textContent?.substring(0, limit) + '...' || '';
+  }
+  
+
 
   nextBtn(slide: any, i: number) {
     if (i <= 0) {

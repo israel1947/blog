@@ -1,3 +1,9 @@
 .carrucel-content{
   border-image: fill 0 linear-gradient(#0003,#000);
 }
+
+.excerpt{
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Número de líneas visibles */
+  -webkit-box-orient: vertical;
+}

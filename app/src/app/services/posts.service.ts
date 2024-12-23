@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EventEmitter, inject, Injectable } from '@angular/core';
 import { environment } from '../../enviroments/enviroments';
-import { Comment, Post, responseDataPosts, User } from '../interfaces/interface';
+import { Comment, Post, PostRequest, responseDataPosts, User } from '../interfaces/interface';
 import { Observable } from 'rxjs/internal/Observable';
+import { AuthService } from '../auth/auth.service';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,9 @@ export class PostsService {
 
   private readonly URL = environment.URL;
   private http: HttpClient = inject(HttpClient);
+  private auth: AuthService = inject(AuthService);
   paginaPost = 0;
+  newPost = new EventEmitter<PostRequest>();
 
 
   getProfilUser(post_id: number): Observable<User[]> {
@@ -38,4 +42,23 @@ export class PostsService {
     const encodedCategory = encodeURIComponent(category);
     return this.http.get<{ ok: boolean, posts: Post[] }>(`${this.URL}/posts?category=${encodedCategory}`);
   };
+
+  createPosts(postData: FormData): Observable<{ post: PostRequest }> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.auth.token ? this.auth.token.replace(/"/g, '') : ''}`
+    });
+
+    return this.http.post<{ post: PostRequest }>(`${this.URL}/posts/create`, postData, { headers }).pipe(
+      tap(response => {
+        this.newPost.emit(response.post);
+      }),
+      catchError(error => {
+        console.log('error al crear posts:', error);
+        return throwError(() => new Error('Error al crear el post. Por favor, inténtalo de nuevo.'))
+
+      })
+    );
+
+  }
+
 }

@@ -12,7 +12,7 @@
       </div>
       <div class="description my-3 flex flex-col gap-2">
         <h3 class="font-bold text-blue-600 cursor-pointer" [routerLink]="['/post', slidea.friendlyId]">{{slidea.title}}</h3>
-        <p class="card-text">{{slidea.description}}</p>
+        <div class="content-description p-2 excerpt overflow-hidden text-ellipsis" [innerHTML]="getExcerptWithHTML(slidea?.description, 100)"></div>
       </div>
       <div class="acctions flex justify-between items-center">
         <span>{{slidea.created_at | date:'mediumDate'}}</span>

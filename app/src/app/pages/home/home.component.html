@@ -30,13 +30,15 @@
   </div>
 
   @if (WeeklyHighlight.length >=1 || latesNews.length >=1 || mostViews.length >=1) {
-  <div class="mostRead w-[100%] px-[1rem] mt-8 grid grid-cols-3 gap-4 max-md:grid-cols-2 max-[500px]:grid-cols-1 ">
+  <div class="mostRead w-[100%] px-[1rem] mt-8 grid grid-flow-col gap-4 max-[768px]:grid-flow-row">
+    @if (mostViews.length>0) {
     <div class="flex flex-col gap-4 basis-[20%]">
       <h2 class="text-3xl font-bold mb-4">Most Read</h2>
       @for (postMostViews of mostViews.slice(); track $index) {
       <app-card [cardType]="'primary'" [post]="postMostViews" [classType]="clasType2Card"></app-card>
       }
     </div>
+    }
 
     @if (latesNews.length >=1) {
     <div class="flex flex-col gap-4 basis-[60%]">

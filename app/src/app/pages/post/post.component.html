@@ -44,14 +44,14 @@
           </div>
         </div>
       </div>
-      <div class="content-description p-2">
-        <p class="mb-8">{{postData?.description}}</p>
-        <mat-chip-set>
-          @for (item of postData?.tags; track $index) {
-          <mat-chip>{{item}}</mat-chip>
-          }
-        </mat-chip-set>
+      <div class="content-description p-2" [innerHTML]="postData?.description">
+        <!-- <p class="mb-8">{{postData?.description}}</p> -->
       </div>
+      <mat-chip-set>
+        @for (tag of postData.tags; track $index) {
+        <mat-chip>{{tag}}</mat-chip>
+        }
+      </mat-chip-set>
     </div>
     <div class="ads">
       <div

@@ -62,7 +62,7 @@ export class PostsController {
 
     try {
       const postsData = await this.postsService.getPostByCategory(category);
-      return resp.status(200).json({ ok: true, posts: postsData });
+      return resp.status(200).json(postsData);
     } catch (error) {
       return resp.status(204).json({ ok: false, message: error.message });
     }

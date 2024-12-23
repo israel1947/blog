@@ -11,9 +11,7 @@
         <h2 class="font-bold">{{post.title}}</h2>
         <span class="text-gray-400">{{post.created_at | customDate}} ago</span>
       </div>
-      <div class="container-card--description card-text">
-        <p>{{post.description}}</p>
-      </div>
+      <div class="container-card--description card-text" [innerHTML]="post.description"></div>
       <div class="container-card--tag flex content-center justify-between">
         <strong class="text-blue-400">{{post.category}}</strong>
         <span class="text-gray-400">{{post.last_read_at }}</span>
@@ -32,9 +30,8 @@
         <h2 class="font-bold">{{post.title}}</h2>
         <span class="text-gray-400">{{post.created_at | customDate}} ago</span>
       </div>
-      <div class="container-card--description card-text">
-        <p>{{post.description}}</p>
-      </div>
+      <div class="container-card--description card-text" [innerHTML]="post.description"></div>
+
       <div class="container-card--tag flex content-center justify-between">
         <strong class="text-blue-400">{{post.category}}</strong>
         <span class="text-gray-400">{{post.last_read_at}}</span>
@@ -58,7 +55,7 @@
         <!-- Tiempo de publicación -->
         <span>{{post.created_at | customDate}} ago</span>
       </div>
-      <p class="text-sm mt-1 card-text">{{post.description}}</p>
+      <div class="text-sm mt-1 card-text" [innerHTML]="post.description"></div>
     </div>
     <div class="flex items-center justify-between text-sm">
       <a href="#" class="text-blue-400 font-semibold">{{post.category}}</a>

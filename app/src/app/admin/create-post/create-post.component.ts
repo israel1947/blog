@@ -1,31 +1,40 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { Category, responseData } from '../../interfaces/interface';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 import { FileUtils } from '../../shared/clases/file-helper';
+import Quill from 'quill';
+import "quill/dist/quill.core.css";
+import { PostsService } from '../../services/posts.service';
+import { SnackbarService } from '../../shared/snackbar.service';
+import { LoadingPencilComponent } from '../../components/loading-pencil/loading-pencil.component';
 
 @Component({
   selector: 'app-create-post',
   standalone: true,
-  imports: [MatChipsModule, FormsModule, ReactiveFormsModule],
+  imports: [MatChipsModule, FormsModule, ReactiveFormsModule, LoadingPencilComponent, CommonModule],
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.scss'
 })
-export class CreatePostComponent {
+export class CreatePostComponent implements AfterViewInit {
   tagsArray: string[] = [];
   categorySelect = Object.values(Category);
   currentDate = new Date();
   perfil: responseData | null | any = null;
   user: Partial<responseData> = {}
-  fieldsPost = ['title', 'images', 'description', 'tags', 'created_at', 'last_read_at', 'category', 'user_id']
+  fieldsPost: Array<string> = ['title', 'images', 'description', 'tags', 'created_at', 'last_read_at', 'category', 'user_id']
   previewImgCover = FileUtils.previewImage;
-
+  isLoading = false;
+  editor!: Quill;
+  savedContent: string | null = null;
   fileSelected = FileUtils.onFileSelected;
 
   private formBilder: FormBuilder = inject(FormBuilder);
   private readonly authService: AuthService = inject(AuthService);
+  private postService: PostsService = inject(PostsService);
+  private snackBarService: SnackbarService = inject(SnackbarService);
 
   constructor() {
     const storedUser = localStorage.getItem('user');
@@ -33,6 +42,23 @@ export class CreatePostComponent {
       this.perfil = JSON.parse(storedUser);
     }
     this.getUserData();
+  }
+
+  ngAfterViewInit() {
+    const quill = Quill;
+    this.editor = new quill('#editor-container', {
+      theme: 'snow',
+      placeholder: 'Write your posts content here...',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline'], // Negrita, cursiva, subrayado
+          [{ 'header': [1, 2, 3, false] }], // Encabezados
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }], // Listas
+          ['link', 'image'], // Enlaces, imágenes
+          ['clean'] // Limpiar formateo
+        ]
+      }
+    });
   }
 
   async getUserData() {
@@ -56,10 +82,17 @@ export class CreatePostComponent {
     return this.postForm.get('tags') as FormArray;
   }
 
+  addTag(tag: string) {
+    this.tags.push(this.formBilder.control(tag));
+  }
+
   get userID() {
     return this.postForm.get('user_id');
   }
 
+  get contentPost() {
+    return this.postForm.get('description');
+  }
 
   onTagsInput(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -84,17 +117,33 @@ export class CreatePostComponent {
   }
 
 
-  onFileSelectedPreview(event:Event){
+  onFileSelectedPreview(event: Event) {
     FileUtils.onFileSelected(event, this.postForm, 'images', (preview) => {
       this.previewImgCover = preview;
     });
     console.log(this.previewImgCover);
   }
 
-  async publish() {
-    const { tags, created_at, category, user_id, title, description, last_read_at, images } = this.postForm.value;
-    console.log({ tags, created_at, category, user_id, title, description, last_read_at, images });
+  publish() {
+    this.savedContent = this.editor.root.innerHTML; // Obtener el HTML del contenido
+    this.contentPost?.setValue(this.savedContent)
+    const { tags } = this.postForm.value;
+    this.addTag(tags)
 
-    FileUtils.loadFileSelected('images', this.postForm, this.fieldsPost);
+    const formData = FileUtils.loadFileSelected('images', this.postForm, this.fieldsPost);
+    this.isLoading = !this.isLoading;
+    this.postService.createPosts(formData)
+      .subscribe({
+        next: (post) => {
+          this.isLoading = false;
+          this.snackBarService.alertBar('Post created sussefully!', 'Aceptar');
+          console.log(post.post.tags);
+
+          return post.post;
+        },
+        error: (error) => {
+          //
+        }
+      })
   }
 }

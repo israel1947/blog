@@ -16,9 +16,20 @@ export class PostsService {
 
   constructor(private readonly commentService: CommentsService) { }
 
+
+  processTags(tags: string[]): string[] {
+    return tags
+      .filter((tag) => tag && !tag.includes(',')) // Elimina cadenas concatenadas
+      .map((tag) => tag.trim())
+      .filter((tag, index, self) => self.indexOf(tag) === index); // Elimina duplicados
+  }
+
+
   async createPost(posts: PostDto): Promise<Posts> {
+    const cleanTags = this.processTags(posts.tags);
     const post = new this.postModel({
       ...posts,
+      tags:cleanTags,
       friendlyId: slugify(posts.title, { lower: true }),
     });
     return post.save();
