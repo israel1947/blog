@@ -4,9 +4,13 @@ import { Model, Types } from 'mongoose';
 import { UserDto } from 'src/dto/userDto';
 import { User } from 'src/models/user';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
+
+  constructor(private jwtService: JwtService) { }
+
   @InjectModel(User.name) private userModel: Model<User>;
 
   async findOne(email: string): Promise<User | null> {
@@ -25,18 +29,33 @@ export class UsersService {
     return this.userModel.findById({ _id: _id });
   }
 
-  async updateUser(id: string, updateUser: UserDto): Promise<User[] | null> {
+  async updateUser(id: string, updateUser: UserDto): Promise<{ access_token: string }> {
     const userId = new Types.ObjectId(id);
     const hassPass = await bcrypt.hash(updateUser.password, 10)
     const userData = await this.userModel.findById(userId);
+
     if (!userData) {
       throw new NotFoundException("Username not found or does not exist");
     }
-    const updateUser2 = {
-      ...updateUser,
-      password:hassPass,
+
+
+    const user = await this.userModel.findOneAndUpdate(
+      userId,
+      {
+        ...updateUser,
+        password: hassPass,
+      },
+      { new: true }
+    )
+
+    if (!user) {
+      throw new Error("Error updating the user");
     }
-    return this.userModel.findOneAndUpdate(userId,updateUser2,{new:true});
+
+    const userPayload = user.toObject();
+    const access_token = await this.jwtService.signAsync(userPayload, {secret: process.env.SECRET});
+
+    return { access_token };
   };
 
   async removeUser(id: string) {
