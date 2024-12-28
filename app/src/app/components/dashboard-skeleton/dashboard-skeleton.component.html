@@ -1,0 +1,44 @@
+<main class="p-4 w-[90%] flex flex-col items-center justify-center gap-4">
+  <!-- Toolbar Skeleton -->
+  <section class="flex w-[100%] justify-end animate-pulse">
+    <div class="w-40 h-10 bg-gray-300 rounded-full"></div>
+  </section>
+
+  <!-- Perfil Skeleton -->
+  <section class="w-[100%] animate-pulse">
+    <div class="perfil">
+      <div class="perfil-content--info flex justify-between items-center w-[100%]">
+        <div class="perfil-content-info--name space-y-3">
+          <div class="w-3/4 h-8 bg-gray-300 rounded"></div>
+        </div>
+        <div class="perfil-content-info-picture flex flex-col items-center justify-center gap-4">
+          <div class="w-16 h-16 bg-gray-300 rounded-full"></div>
+          <div class="w-1/2 h-6 bg-gray-300 rounded"></div>
+          <div class="w-24 h-6 bg-gray-300 rounded"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Posts Skeleton -->
+  <section class="flex flex-col w-[100%] mt-4">
+    <div class="posts">
+      <h3 class="font-medium mb-4">Posts</h3>
+      <!-- If data is loading, show skeleton -->
+      <div class="grid grid-cols-2 gap-4 max-[768px]:grid-cols-1 animate-pulse">
+        <!-- Skeleton Cards -->
+        <div class="space-y-3 border border-gray-300 rounded-lg p-4">
+          <div class="w-full h-28 bg-gray-300 rounded"></div>
+          <div class="w-3/4 h-6 bg-gray-300 rounded"></div>
+          <div class="w-1/2 h-6 bg-gray-300 rounded"></div>
+        </div>
+        <div class="space-y-3 border border-gray-300 rounded-lg p-4">
+          <div class="w-full h-28 bg-gray-300 rounded"></div>
+          <div class="w-3/4 h-6 bg-gray-300 rounded"></div>
+          <div class="w-1/2 h-6 bg-gray-300 rounded"></div>
+        </div>
+        <!-- Add more skeleton cards as needed -->
+      </div>
+    </div>
+  </section>
+</main>

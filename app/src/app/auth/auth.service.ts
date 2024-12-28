@@ -1,10 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../enviroments/enviroments';
-import { GoogleUser, Post, responseData, User, UserPost } from '../interfaces/interface';
+import { GoogleUser, responseData, User } from '../interfaces/interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from 'rxjs';
 import { SnackbarService } from '../shared/snackbar.service';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class AuthService {
   token!: string | null;
   private user: Partial<responseData> = {};
   private redirectUrl: string = '';
-
+  
 
   setRedirectUrl(url: string) {
     this.redirectUrl = url;
@@ -39,12 +39,12 @@ export class AuthService {
     return new Promise(resolve => {
       this.http.post(`${this.baseUrl}/auth/create`, user)
         .subscribe(async (resp: any) => {
-          if (resp['ok'] && resp['user'].access_token) {
-            await this.saveToken(resp['user'].access_token);
-            resolve(true);
-          } else {
-            this.clearSession();
-          }
+            if (resp['ok'] && resp['user'].access_token) {
+                await this.saveToken(resp['user'].access_token);
+              resolve(true);
+            } else {
+              this.clearSession();
+            }
         }, () => {
           this.snackBarService.alertBar('Something went wrong please try again!');
           this.clearSession();
@@ -134,6 +134,27 @@ export class AuthService {
           }
         });
     })
+  };
+
+
+  updateUser(userID: any, user: any) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token ? this.token.replace(/"/g, '') : ''}`
+    });
+
+    return new Promise((resolve) => {
+      this.http.patch(`${this.baseUrl}/users/${userID}`, user, { headers })
+        .subscribe(async (resp: any) => {
+          if (resp['ok'] && resp['user'].access_token) {
+            await this.saveToken(resp['user'].access_token);
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
+
+    });
+
   };
 
 }

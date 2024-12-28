@@ -8,11 +8,10 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 
 @Component({
-  selector: 'app-card',
-  standalone: true,
-  imports: [CommonModule, CustomDatePipe, RouterModule, MatDividerModule, ImagenPipe],
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+    selector: 'app-card',
+    imports: [CommonModule, CustomDatePipe, RouterModule, MatDividerModule, ImagenPipe],
+    templateUrl: './card.component.html',
+    styleUrl: './card.component.scss'
 })
 export class CardComponent {
   @Input() post:Partial<Post> = {};

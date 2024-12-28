@@ -5,12 +5,20 @@ import { AuthService } from '../../auth/auth.service';
 import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { SnackbarService } from '../../shared/snackbar.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { ModalEditPerfilComponent } from '../modal-edit-perfil/modal-edit-perfil.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-perfil',
-  standalone: true,
-  imports: [CommonModule, ImagenProfilePipe, MatButtonModule, RouterModule],
+  imports: [
+    CommonModule, 
+    ImagenProfilePipe, 
+    MatButtonModule, 
+    RouterModule,
+    MatDividerModule
+  ],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -24,17 +32,17 @@ export class PerfilComponent implements OnInit {
 
   private readonly authService: AuthService = inject(AuthService);
   private snakService: SnackbarService = inject(SnackbarService);
+  private router: Router = inject(Router);
+  readonly dialog = inject(MatDialog);
 
-  constructor(private changeDetettor: ChangeDetectorRef){}
+  constructor(private changeDetettor: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.loadProfile();
-    
+
   }
 
-   loadProfile() {
+  loadProfile() {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.perfil = JSON.parse(storedUser);
@@ -43,11 +51,11 @@ export class PerfilComponent implements OnInit {
     this.getUserData();
   }
 
-   getUserData() {
-    this.authService.getUser().then((user)=>{
+  getUserData() {
+    this.authService.getUser().then((user) => {
       this.user = user;
       this.changeDetettor.detectChanges();
-    }).catch((error)=>{
+    }).catch((error) => {
 
     })
   }
@@ -72,11 +80,21 @@ export class PerfilComponent implements OnInit {
   }
 
   async logout() {
-    this.snakService.openDialog().afterClosed().subscribe(async(close:boolean)=>{
+    this.snakService.openDialog().afterClosed().subscribe(async (close: boolean) => {
       if (close) {
         await this.authService.clearSession();
         window.location.reload();
       }
     });
+  }
+
+  getRouterRoleUser(role:any) {
+
+    if (role === 'Admin') {
+      this.router.navigate(['/admin/dashboard']);
+      return;
+    }
+    const dialogRef = this.dialog.open(ModalEditPerfilComponent);
+    dialogRef.afterClosed();
   }
 }

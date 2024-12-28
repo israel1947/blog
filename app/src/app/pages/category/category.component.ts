@@ -4,11 +4,10 @@ import { CarrucelComponent } from '../../components/carrucel/carrucel.component'
 import { CardComponent } from "../../components/card/card.component";
 
 @Component({
-  selector: 'app-category',
-  standalone: true,
-  imports: [CarrucelComponent, CardComponent],
-  templateUrl: './category.component.html',
-  styleUrl: './category.component.scss'
+    selector: 'app-category',
+    imports: [CarrucelComponent, CardComponent],
+    templateUrl: './category.component.html',
+    styleUrl: './category.component.scss'
 })
 export class CategoryComponent {
 

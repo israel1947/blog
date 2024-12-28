@@ -11,12 +11,11 @@ import { responseData } from '../../interfaces/interface';
 
 
 @Component({
-  selector: 'app-nav',
-  standalone: true,
-  imports: [MatExpansionModule, MatIconModule, MatAccordion, PerfilComponent, RouterLink,MatButtonModule, MatDialogModule],
-  changeDetection:ChangeDetectionStrategy.OnPush,
-  templateUrl: './nav.component.html',
-  styleUrl: './nav.component.scss'
+    selector: 'app-nav',
+    imports: [MatExpansionModule, MatIconModule, MatAccordion, PerfilComponent, RouterLink, MatButtonModule, MatDialogModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './nav.component.html',
+    styleUrl: './nav.component.scss'
 })
 export class NavComponent implements OnInit {
 

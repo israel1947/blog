@@ -5,11 +5,10 @@ import { Comment } from '../../interfaces/interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-coments',
-  standalone: true,
-  imports: [MatSidenavModule, MatDividerModule, CommonModule],
-  templateUrl: './coments.component.html',
-  styleUrl: './coments.component.scss'
+    selector: 'app-coments',
+    imports: [MatSidenavModule, MatDividerModule, CommonModule],
+    templateUrl: './coments.component.html',
+    styleUrl: './coments.component.scss'
 })
 export class ComentsComponent{
   @Input() comentData: Partial<Comment>[] = [];

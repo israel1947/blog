@@ -11,21 +11,19 @@ import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
 import { response } from 'express';
 
 @Component({
-  selector: 'app-post',
-  standalone: true,
-  imports: [CommonModule, CustomDatePipe, MatChipsModule, ComentsComponent, ImagenPipe, ImagenProfilePipe],
-  templateUrl: './post.component.html',
-  styleUrl: './post.component.scss'
+    selector: 'app-post',
+    imports: [CommonModule, CustomDatePipe, MatChipsModule, ComentsComponent, ImagenPipe, ImagenProfilePipe],
+    templateUrl: './post.component.html',
+    styleUrl: './post.component.scss'
 })
 export class PostComponent implements OnInit {
   postData: Partial<Post> = {};
-  userData: User | undefined;
+  userData!:User | undefined;
   comentData: Partial<Comment>[]=[];
   route: ActivatedRoute = inject(ActivatedRoute);
   showFiller = false;
   userId!: any;
   post_id!: any;
-
 
   constructor(private postServices: PostsService, private comentsService: PostsService) {
 
@@ -39,10 +37,8 @@ export class PostComponent implements OnInit {
       this.userId = this.postData.user_id;
       this.post_id = this.postData._id;
       if (this.userId) {
-        this.postServices.getProfilUser(this.userId).subscribe((users: User[]) => {
-          users.map((resp) => {
-            this.userData = resp;
-          });
+        this.postServices.getProfilUser(this.userId).subscribe((users:{user:User}) => {
+          this.userData = users.user;
         });
       }
     });

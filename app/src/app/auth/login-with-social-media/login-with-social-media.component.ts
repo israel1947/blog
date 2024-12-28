@@ -6,11 +6,10 @@ import { GoogleSigninButtonModule, SocialAuthService } from '@abacritt/angularx-
 import { SnackbarService } from '../../shared/snackbar.service';
 
 @Component({
-  selector: 'app-login-with-social-media',
-  standalone: true,
-  imports: [GoogleSigninButtonModule],
-  templateUrl: './login-with-social-media.component.html',
-  styleUrl: './login-with-social-media.component.scss'
+    selector: 'app-login-with-social-media',
+    imports: [GoogleSigninButtonModule],
+    templateUrl: './login-with-social-media.component.html',
+    styleUrl: './login-with-social-media.component.scss'
 })
 export class LoginWithSocialMediaComponent {
   client_id: string = environment.client_id;

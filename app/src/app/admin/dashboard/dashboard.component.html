@@ -1,1 +1,67 @@
-<p>dashboard works!</p>
+@if (isLoading) {
+<app-dashboard-skeleton />
+}@else {
+<main class="p-4 w-[90%] flex flex-col items-center justify-center gap-4">
+  <section class="flex w-[100%] justify-end ">
+    <div class="toolbar">
+      <button class="rounded-full p-3 bg-blue-600 text-white" (click)="addNewCreator()">
+        <i class="ri-add-line"></i>
+        Add new creater
+      </button>
+    </div>
+  </section>
+
+  <section class="w-[100%]">
+    <div class="perfil">
+      <div class="perfil-content--info flex justify-between items-center w-[100%]">
+        <div class="perfil-content-info--name">
+          <h1 class="font-bold text-[38px]">{{userData?.name}} {{userData?.last_name}}</h1>
+          <p><strong>{{userData?.email}} </strong></p>
+        </div>
+        <div class="perfil-content-info-picture flex flex-col items-center justify-center gap-1">
+          @if (userData?.photo) {
+          <div class="img-perfil w-[80px] h-[80px] rounded-[50%] bg-cover bg-no-repeat object-center"
+            [ngStyle]="{'background-image': 'url(' + (userData?.photo | imagenProfile ) + ')'}">
+          </div>
+          }<div
+            class="img-perfil-initial w-[80px] h-[80px] rounded-full flex items-center justify-center bg-blue-500 text-white font-bold text-lg">
+            {{ getInitials(user.name, user.last_name) }}
+          </div>
+          <h2 class="font-medium text-[18px]">{{userData?.name || 'Cargando...'}} {{userData?.last_name}}</h2>
+          <button class="text-green-800" (click)="editProfile()">Edit Profile<i class="ri-pencil-line"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="flex flex-col w-[100%] mt-4">
+    <div class="posts">
+      <h3 class="font-medium">Posts</h3>
+      @if (postsData.length>0) {
+      <div class="grid grid-cols-2 gap-4 max-[768px]:grid-col-1">
+        @for (post of postsData; track $index) {
+        <app-card [cardType]="'tertiary'" [post]="post"></app-card>
+        }
+      </div>
+      <div class="flex items-center justify-center w-[100%]">
+        <button class="text-blue-600 font-medium mt-4 mb-4" (click)="more($event)">More</button>
+      </div>
+      }@else {
+      <div
+        class="posts--user flex flex-col gap-2 items-center justify-center p-4 border border-gray-300 rounded-[15px]">
+        <picture class="w-[50%]">
+          <source srcset="../../../assets/img/undraw_empty_4zx0.svg" type="image/svg+xml" />
+          <img src="../../../assets/img/undraw_empty_4zx0.svg" alt="">
+        </picture>
+        <p>This is where you can manage your posts, but you haven't written anything yet.</p>
+        <a class="rounded-full p-2 bg-blue-600 text-white flex" [routerLink]="[ '/admin/create']">
+          Create Post
+          <i class="ri-pencil-line"></i>
+        </a>
+      </div>
+      }
+    </div>
+  </section>
+
+</main>
+}

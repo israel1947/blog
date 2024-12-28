@@ -9,11 +9,10 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
 
 
 @Component({
-  selector: 'app-carrucel',
-  standalone: true,
-  imports: [CommonModule, RouterModule, ImagenPipe],
-  templateUrl: './carrucel.component.html',
-  styleUrl: './carrucel.component.scss'
+    selector: 'app-carrucel',
+    imports: [CommonModule, RouterModule, ImagenPipe],
+    templateUrl: './carrucel.component.html',
+    styleUrl: './carrucel.component.scss'
 })
 export class CarrucelComponent implements OnInit {
 

@@ -12,11 +12,10 @@ import { RouterModule } from '@angular/router';
 import { SkeletonComponent } from "../../shared/skeleton/skeleton.component";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [MatTabsModule, CardComponent, CarrucelComponent, MatProgressSpinnerModule, MatDividerModule, CategoryComponent, RouterModule, SkeletonComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    imports: [MatTabsModule, CardComponent, CarrucelComponent, MatProgressSpinnerModule, MatDividerModule, CategoryComponent, RouterModule, SkeletonComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
   @ViewChild('cont2r') content!: ElementRef;

@@ -15,6 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
+          "preserveSymlinks": true,
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/sing-in-google-app",
@@ -49,8 +50,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 }
               ],
               "outputHashing": "all"

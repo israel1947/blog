@@ -9,6 +9,6 @@ export const adminGuard: CanActivateFn = async () => {
   if (user &&  user.role === 'Admin') {
     return true;
   }
-  router.navigate(['/home']);
+  router.navigate(['/blog']);
   return false;
 };

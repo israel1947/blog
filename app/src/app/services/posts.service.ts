@@ -18,8 +18,10 @@ export class PostsService {
   newPost = new EventEmitter<PostRequest>();
 
 
-  getProfilUser(post_id: number): Observable<User[]> {
-    return this.http.get<User[]>(`${this.URL}/users?id=${post_id}`);
+  getProfilUser(post_id: number): Observable<{user:User}> {
+   /*  return this.http.get<User[]>(`${this.URL}/users?id=${post_id}`); */
+   return this.http.get<{user:User}>(`${this.URL}/users/${post_id}`);
+
   };
 
   getAllPosts(pull: boolean = false): Observable<responseDataPosts> {

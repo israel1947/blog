@@ -1,7 +1,8 @@
 @if(perfil){
 <div class="avatar-perifl-img cursor-pointer flex items-center">
   @if (user.role === 'Admin') {
-  <a [routerLink]="'/admin/create'" class="text-white bg-blue-400 p-2 font-medium rounded-[5px]">Write <i class="ri-edit-2-line"></i></a>
+  <a [routerLink]="'/admin/create'" class="text-white bg-blue-400 p-2 font-medium rounded-[5px]">Write <i
+      class="ri-edit-2-line"></i></a>
   }
 
   <div class="img-perfil w-[48px] h-[48px] rounded-[50%] bg-cover bg-no-repeat object-center"
@@ -20,18 +21,17 @@
   @if (isOpen) {
   <div class="absolute right-0 mt-[15rem] w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50 ">
     <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-
-      <a [routerLink]="'/admin/dashboard'" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-        {{user.name | titlecase}} {{user.last_name | titlecase}}
-      </a>
-
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-        Configuraciones
-      </a>
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-        Mensajes
-      </a>
-      <button (click)="logout()" class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 hover:text-gray-900"
+      <div class="perfil-isopen flex flex-col px-4 py-2 text-gray-700">
+        <h3 class="font-medium " role="menuitem">
+          {{user.name | titlecase}} {{user.last_name | titlecase}}
+        </h3>
+        <span class="truncate block" title="{{user.email}}">{{user.email}}</span>
+      </div>
+      <mat-divider/>
+      <button (click)="getRouterRoleUser(user.role)" class="font-medium  w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+        <i class="ri-user-follow-line"></i> Account
+      </button>
+      <button (click)="logout()" class="font-medium  w-full text-left  block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 hover:text-red-900 "
         role="menuitem">
         <i class="ri-logout-box-r-line"></i> Cerrar sesión
       </button>

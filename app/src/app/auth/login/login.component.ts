@@ -8,11 +8,10 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [MatDialogModule, ReactiveFormsModule, CommonModule, MatButtonModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [MatDialogModule, ReactiveFormsModule, CommonModule, MatButtonModule],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 

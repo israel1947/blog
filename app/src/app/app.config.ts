@@ -1,15 +1,17 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, Injector } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
+import { createCustomElement } from '@angular/elements';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { environment } from "../enviroments/enviroments";
 
 /* Google credentials  */
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
-import { environment } from "../enviroments/enviroments";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withFetch } from '@angular/common/http';
 
 
 export const appConfig: ApplicationConfig = {
@@ -34,6 +36,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(), 
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    {
+      provide:'custom-elements',
+      useFactory:(injector:Injector)=>{
+        const angularElement = createCustomElement(AppComponent,{injector});
+        customElements.define('app-root', angularElement);
+      },
+      deps:[Injector]
+    },
   ]
 };

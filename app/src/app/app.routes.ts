@@ -4,11 +4,11 @@ import { adminGuard } from './guards/admin.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'blog',
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: 'blog',
     loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
   },
   {

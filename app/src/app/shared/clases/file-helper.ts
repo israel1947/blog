@@ -15,8 +15,6 @@ export class FileUtils {
       const render = new FileReader();
       render.onload = () => {
         callback(render.result);
-        console.log(this.previewImage);
-
       }
       render.readAsDataURL(file);
     }
@@ -25,18 +23,18 @@ export class FileUtils {
 
   static loadFileSelected(fieldForm: string, formName: FormGroup, formsFields: Array<string>) {
     const formData = new FormData();
-    
+
     const formFields = formsFields;
     formFields.map((field) => {
       const value = formName.get(field)?.value;
+      
       if (value) {
         formData.append(field, value);
       }
     })
 
-
     if (formFields.includes('tags')) {
-      // Procesar los tags como array
+
       const tags = formName.get('tags')?.value;
       if (Array.isArray(tags)) {
         tags.forEach((tag, index) => {
@@ -47,7 +45,7 @@ export class FileUtils {
 
     const fieldFormChange = formName.get(fieldForm)?.value;
     if (fieldFormChange) {
-      formData.append(fieldForm, fieldFormChange)
+      formData.append(fieldForm, fieldFormChange);
     }
     return formData;
   }
