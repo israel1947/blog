@@ -1,3 +1,11 @@
+
+export class CurrentDateForm{
+  static CurrendDateHelper(){
+    const currentDate = new Date();
+    return currentDate.toISOString().split('T')[0];
+  }
+}
+
 export class DateUtils {
   static MostRecently(days: number, values_filter: any): boolean {
       const date = new Date();

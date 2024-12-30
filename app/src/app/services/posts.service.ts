@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, inject, Injectable } from '@angular/core';
+import { EventEmitter, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../enviroments/enviroments';
 import { Comment, Post, PostRequest, responseDataPosts, User } from '../interfaces/interface';
 import { Observable } from 'rxjs/internal/Observable';
@@ -16,6 +16,7 @@ export class PostsService {
   private auth: AuthService = inject(AuthService);
   paginaPost = 0;
   newPost = new EventEmitter<PostRequest>();
+  postIdSignal = signal<string>('');
 
 
   getProfilUser(post_id: number): Observable<{user:User}> {
@@ -61,6 +62,14 @@ export class PostsService {
       })
     );
 
+  }
+
+  sendComment(commentData:Comment):Observable<{comment:Comment}>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.auth.token ? this.auth.token.replace(/"/g, '') : ''}`
+    });
+
+    return this.http.post<{comment:Comment}>(`${this.URL}/comments/create`, commentData,{headers});
   }
 
 }

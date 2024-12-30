@@ -140,8 +140,6 @@ export class CreatePostComponent implements AfterViewInit {
         next: (post) => {
           this.isLoading = false;
           this.snackBarService.alertBar('Post created sussefully!', 'Aceptar');
-          console.log(post.post.tags);
-
           return post.post;
         },
         error: (error) => {

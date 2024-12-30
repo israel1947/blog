@@ -1,15 +1,16 @@
 <article>
   <div class="w-full max-w-xs  bg-white shadow-md rounded p-4">
-   <div class="title flex items-center justify-between">
-    <h3 class="font-bold text-2xl">Coment Field</h3>
-    <button (click)="close(valueClick?.value)" ><i class="ri-close-circle-line ri-xl"></i></button>
-   </div>
+    <div class="title flex items-center justify-between">
+      <h2 class="font-bold text-2xl"><i class="ri-chat-3-line"></i> Coment Field</h2>
+      <button (click)="close(valueClick?.value)"><i class="ri-close-circle-line ri-xl"></i></button>
+    </div>
+    @if (perfil) {
     @for (coment of comentData; track $index) {
     <div class="coments p-4">
       <div class="perfil-user">
         <div class="photo flex items-center gap-2">
           <div class="photo-picture h-12 w-12 bg-cover bg-no-repeat object-center rounded-full"
-            [ngStyle]="{'background-image': 'url(' + coment?.author_photo + ')'}"></div>
+            [ngStyle]="{'background-image': 'url(' + (coment?.author_photo | imagenProfile) + ')'}"></div>
           <div class="name flex flex-col gap-2">
             <strong>{{coment?.author}}</strong>
             <span>{{coment?.created_at | date:'mediumDate'}}</span>
@@ -21,16 +22,57 @@
       </div>
       <mat-divider></mat-divider>
     </div>
+    }@empty {
+    @if (perfil){
+    @if (isLoading) {
+    <div class="spinner-container">
+      <section class="dots-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </section>
+
+    </div>
+    }@else {
+    <div class="max-w-md mx-auto mt-10">
+      <!-- Comentario 1 -->
+      <div class="flex items-center space-x-4 p-4 bg-white shadow rounded-lg">
+        <div class="h-10 w-10 bg-purple-200 rounded-full flex items-center justify-center">
+          <div class="h-4 w-4 bg-purple-500 rounded-full"></div>
+        </div>
+        <div class="flex-1">
+          <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+          <div class="h-4 bg-gray-100 rounded w-1/2"></div>
+        </div>
+      </div>
+      <!-- Mensaje "No comment yet" -->
+      <div class="flex flex-col items-center justify-center space-y-4">
+        <p class="text-gray-500 text-sm">No comment yet</p>
+      </div>
+    </div>
     }
-    <form class="w-full max-w-sm">
+
+    }
+    }
+    <form class="w-full max-w-sm" (ngSubmit)="sendComment()" [formGroup]="commentForm">
       <div class="flex items-center border-b border-blue-500 py-2">
-        <input
+        <input formControlName="content"
           class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
           type="text" placeholder="Add your coment here..." aria-label="Full name">
-        <button class="flex-shrink-0 text-sm text-blue-500" type="button">
+        <button class="flex-shrink-0 text-sm text-blue-500" type="submit">
           Coment
         </button>
       </div>
     </form>
+    }@else {
+    <h4>
+      <button (click)="openDialogLogin()" class="underline text-blue-500 ">log in</button>
+      or
+      <button (click)="openDialogRegister()" class="underline text-blue-500 ">Register</button>
+      to read the rest of the content.
+    </h4>
+    }
   </div>
 </article>
