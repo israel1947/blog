@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsDate, IsMongoId } from 'class-validator';
+import { IsString, IsNotEmpty, IsDate, IsMongoId, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CommentsDto {
@@ -14,7 +14,7 @@ export class CommentsDto {
   author: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'author_photo field is required' })
+  @IsOptional()
   @IsString()
   author_photo: string;
 

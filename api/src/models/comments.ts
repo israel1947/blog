@@ -16,7 +16,7 @@ export class Comments {
   author: string;
 
   @ApiProperty()
-  @Prop({ required: true })
+  @Prop({ required: false })
   author_photo: string;
 
   @ApiProperty()
