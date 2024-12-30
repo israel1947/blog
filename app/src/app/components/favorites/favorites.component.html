@@ -1,0 +1,22 @@
+<main class="p-4 w-[90%] flex flex-col items-center justify-center gap-4">
+  <section class="flex w-[100%] justify-start">
+    <div class="toolbar">
+      <h2 class="font-bold text-3xl">My Favorites</h2>
+    </div>
+  </section>
+  <section
+    class="grid grid-cols-auto-fill-294 gap-y-5 gap-x-3.5 content-stretch items-stretch w-full mb-52 max-xs:grid-cols-1 max-xs:gap-2.5">
+    @for (posts of favoritesPosts; track $index) {
+    <article class="card flex flex-col text-black h-full z-10 card--loader group false favorite">
+      <app-card [cardType]="'tertiary'" [post]="posts"></app-card>
+    </article>
+    }@empty {
+    <div class="posts--user flex flex-col gap-2 items-center justify-center p-4 border border-gray-300 rounded-[15px]">
+      <picture class="w-[50%]">
+        <source srcset="../../../assets/img/undraw_empty_4zx0.svg" type="image/svg+xml" />
+        <img src="../../../assets/img/undraw_empty_4zx0.svg" alt="not posts created">
+      </picture>
+    </div>
+    }
+  </section>
+</main>

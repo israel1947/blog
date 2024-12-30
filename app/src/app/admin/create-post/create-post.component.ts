@@ -51,7 +51,7 @@ export class CreatePostComponent implements AfterViewInit {
       modules: {
         syntax: true,
         toolbar: [
-          ['bold', 'italic', 'underline', 'blockquote', { 'code-block': 'javascript' }], // Negrita, cursiva, subrayado
+          ['bold', 'italic', 'underline', 'blockquote', 'code-block'], // Negrita, cursiva, subrayado
           [{ 'header': [1, 2, 3, false] }], // Encabezados
           [{ 'list': 'ordered' }, { 'list': 'bullet' }], // Listas
           ['link', 'image'], // Enlaces, imágenes
@@ -144,6 +144,8 @@ export class CreatePostComponent implements AfterViewInit {
         },
         error: (error) => {
           //
+          this.snackBarService.alertBar(error.message, 'Aceptar');
+          this.isLoading = false;
         }
       })
   }

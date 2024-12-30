@@ -56,8 +56,7 @@ export class PostsService {
         this.newPost.emit(response.post);
       }),
       catchError(error => {
-        console.log('error al crear posts:', error);
-        return throwError(() => new Error('Error al crear el post. Por favor, inténtalo de nuevo.'))
+        return throwError(() => new Error(`Error  ${error.error.message}  Por favor, inténtalo de nuevo.`))
 
       })
     );

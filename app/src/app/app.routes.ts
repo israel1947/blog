@@ -16,6 +16,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/post/post.component').then(m => m.PostComponent)
   },
   {
+    path:'favorites',
+    loadComponent:()=> import ('./components/favorites/favorites.component').then( m => m.FavoritesComponent)
+  },
+  {
     path: 'auth',
     loadChildren: () => import('./auth/routes').then(r => r.routes)
   },

@@ -68,15 +68,10 @@ export class DashboardComponent implements OnInit {
 
     more(event: Event, pull: boolean = false) {
         this.postsService.getAllPosts(pull).subscribe((resp) => {
-            console.log("User ID:", this.userID);
-            console.log("Post User IDs:", resp.posts.map((e) => e.user_id));
-
             const userPosts = resp.posts.filter((post) => post.user_id === this.userID);
-
             if (userPosts) {
                 this.postsData.push(...userPosts)
             }
-
             if (event) {
                 event.target?.addEventListener('click', () => {
                     pull = true;

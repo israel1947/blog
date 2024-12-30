@@ -1,6 +1,6 @@
 <article class="flex flex-col items-center w-[100vw]">
   <div class="content-img">
-    <img class="w-[100vw]" [src]="postData.images?.[0] | imagen " [alt]="postData.title">
+    <img class="w-full" [src]="postData.images?.[0] | imagen " [alt]="postData.title">
   </div>
   <div class="flex items-center p-8 max-[768px]:flex-col">
     <div class="content">
@@ -38,8 +38,8 @@
               <span>{{postData?.last_read_at}} read</span>
             </div>
             <div class="perfil-actions flex items-center justify-end gap-2">
-              <button (click)="savePost()"><i class="ri-bookmark-line ri-xl"></i></button>
-              <button (click)="moreActions()"><i class="ri-more-line ri-xl"></i></button>
+              <button (click)="savePost()"><i [class]="favoriteIcons"></i></button>
+              <button (click)="share()"><i class="ri-share-line ri-xl"></i></button>
             </div>
           </div>
         </div>
@@ -53,11 +53,11 @@
         }
       </mat-chip-set>
     </div>
-    <div class="ads">
+    <!-- <div class="ads">
       <div
         class="ads-content w-[300px] h-[300px] bg-gray-400 max-[768px]:w-screen max-[768px]:h-full flex items-center justify-center">
         <h2 class="text-3xl font-bold">ADS</h2>
       </div>
-    </div>
+    </div> -->
   </div>
 </article>

@@ -9,6 +9,8 @@ import { ComentsComponent } from '../../components/coments/coments.component';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
 import { response } from 'express';
+import { SnackbarService } from '../../shared/snackbar.service';
+import { StorgeServicesService } from '../../services/storge-services.service';
 
 @Component({
   selector: 'app-post',
@@ -24,13 +26,17 @@ export class PostComponent implements OnInit {
   showFiller = false;
   userId!: any;
   post_id!: any;
+  urlSahre!: string;
+  favoriteIcons:string = 'ri-bookmark-line ri-xl';
 
-  constructor(private postServices: PostsService, private comentsService: PostsService) {
-
-  }
+  private comentsService: PostsService = inject(PostsService)
+  private postServices: PostsService = inject(PostsService);
+  private snakServie: SnackbarService = inject(SnackbarService);
+  private storageService:StorgeServicesService = inject(StorgeServicesService);
 
   ngOnInit(): void {
     const postDetailId = this.route.snapshot.params['id'];
+    this.urlSahre = postDetailId;
 
     this.postServices.getPostById(postDetailId).subscribe((response) => {
       this.postData = response.post;
@@ -46,12 +52,19 @@ export class PostComponent implements OnInit {
 
   }
 
-  savePost() {
-    console.log("save");
+  async savePost() {
+   const exist = await this.storageService.savePosts(this.postData);
+   this.favoriteIcons = (exist) ? 'ri-bookmark-fill ri-xl':'ri-bookmark-line ri-xl';
   };
 
-  moreActions() {
-    console.log("more");
+  async share() {
+    const data = {
+      title: this.postData.title,
+      url: `post/${this.urlSahre}`,
+    }
+    await navigator.share(data)
+    .then(()=>this.snakServie.alertBar('Link shared! Thank you very much'))
+    .catch(()=>this.snakServie.alertBar('Oops, an error occurred'))
   };
 
   like() {
