@@ -82,12 +82,12 @@ export class DashboardComponent implements OnInit {
 
 
     editProfile() {
-        const dialogRef = this.dialog.open(ModalEditPerfilComponent);
+        const dialogRef = this.dialog.open(RegisterComponent);
         dialogRef.afterClosed()
     }
 
     addNewCreator() {
-        const dialogRef = this.dialog.open(RegisterComponent);
+        const dialogRef = this.dialog.open(ModalEditPerfilComponent);
         dialogRef.afterClosed();
     }
 

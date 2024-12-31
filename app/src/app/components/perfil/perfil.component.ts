@@ -9,6 +9,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ModalEditPerfilComponent } from '../modal-edit-perfil/modal-edit-perfil.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { RegisterComponent } from '../../auth/register/register.component';
 
 @Component({
   selector: 'app-perfil',
@@ -94,7 +95,7 @@ export class PerfilComponent implements OnInit {
       this.router.navigate(['/admin/dashboard']);
       return;
     }
-    const dialogRef = this.dialog.open(ModalEditPerfilComponent);
+    const dialogRef = this.dialog.open(RegisterComponent);
     dialogRef.afterClosed();
   }
 }

@@ -10,16 +10,17 @@ import { FileUtils } from '../../shared/clases/file-helper';
 import { VaidatorService } from '../../shared/vaidator.service';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { firstValueFrom } from 'rxjs';
+import { RegisterComponent } from "../../auth/register/register.component";
 
 @Component({
   selector: 'app-modal-edit-perfil',
-  imports: [MatDialogModule, ReactiveFormsModule, CommonModule, MatButtonModule, ImagenProfilePipe],
+  imports: [MatDialogModule, ReactiveFormsModule, CommonModule, MatButtonModule, ImagenProfilePipe, RegisterComponent],
   templateUrl: './modal-edit-perfil.component.html',
   styleUrl: './modal-edit-perfil.component.scss'
 })
 export class ModalEditPerfilComponent implements OnInit {
   user: Partial<responseData> = {};
-  fieldsUserData: Array<string> = ['name', 'last_name', 'email', 'photo', 'suscription', 'role', 'password']
+  fieldsUserData: Array<string> = ['name', 'last_name', 'email', 'suscription', 'role', 'password']
   role: Array<string> = ['Admin', 'User'];
   showPassword: boolean = false;
   isLoading = false;
@@ -34,7 +35,7 @@ export class ModalEditPerfilComponent implements OnInit {
   private snackBarService: SnackbarService = inject(SnackbarService);
 
 
-  registerFormAdmin: FormGroup = this.formBilder.group({
+  addNewCreator: FormGroup = this.formBilder.group({
     name: ['', [Validators.required, Validators.pattern(this.validatorServices.username)]],
     last_name: ['', [Validators.required, Validators.pattern(this.validatorServices.username)]],
     email: ['', [Validators.required, Validators.pattern(this.validatorServices.emailPattern)]],
@@ -52,35 +53,35 @@ export class ModalEditPerfilComponent implements OnInit {
 
 
   onFileSelectedPreview(event: Event) {
-    FileUtils.onFileSelected(event, this.registerFormAdmin, 'photo', (preview) => {
+    FileUtils.onFileSelected(event, this.addNewCreator, 'photo', (preview) => {
       this.previewImgCover = preview;
     });
   }
 
 
-  updateUserInformation() {
+  async addNewCreatorUser() {
 
-    if (this.registerFormAdmin.invalid) {
+    if (this.addNewCreator.invalid) {
       return;
     };
 
-    const formData = FileUtils.loadFileSelected('photo', this.registerFormAdmin, this.fieldsUserData);
-    const data = {
-      name: formData.get('name'),
-      last_name: formData.get('last_name'),
-      email: formData.get('email'),
-      password: formData.get('password'),
-      photo: formData.get('photo'),
-      suscription: formData.get('suscription'),
-      role: formData.get('role'),
-    };
-
+    const formData = FileUtils.loadFileSelected('photo', this.addNewCreator, this.fieldsUserData);
     this.isLoading = !this.isLoading;
-    this.auth.updateUser(this.user._id, data).then((resp: any) => {
+    const regiasterValid = await this.auth.createUser(formData)
+      .catch((error) => {
+        this.isLoading = false;
+        this.snackBarService.alertBar(error.message, 'Aceptar');
+      });
+
+    if (regiasterValid) {
       this.isLoading = false;
-      this.snackBarService.alertBar('User Updated sussefully!', 'Aceptar');
+      this.snackBarService.alertBar('User created sussefully!', 'Aceptar');
+      this.addNewCreator.reset();
       this.dialogRef.close(true);
-    });
+    } else {
+      this.isLoading = false;
+      this.snackBarService.alertBar('Failed to create user.', 'Aceptar');
+    }
   }
 
   getInitials(name: string | undefined, lastName: string | undefined): string {

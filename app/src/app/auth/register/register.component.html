@@ -1,12 +1,26 @@
 <mat-dialog-content class="mat-typography">
-  <form class="w-full max-w-lg" [formGroup]="registerForm" (ngSubmit)="register()">
+  
+  <form class="w-full max-w-lg" [formGroup]="registerForm" (ngSubmit)="agregarEditarEmpleado()">
+    @if (perfil) {
+    <h1 class="font-bold text-2xl mb-4">My Profile</h1>
+    @if(!user.photo){
+      <div class="img-perfil-initial w-[80px] h-[80px] rounded-full flex items-center justify-center bg-blue-500 text-white font-bold text-lg">
+        {{ getInitials(user.name, user.last_name) }}
+      </div>
+      }
+    <div class="personal-information mb-4 mt-4">
+      <h2 class="font-semibold">Personal Information</h2>
+    </div>
+    }@else {
+    <h1 class="font-bold text-2xl mb-4">Create an account</h1>
+    }
     <div class="flex flex-wrap -mx-3 mb-6">
       <!--TODO FIRST NAME INPUT-->
       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
           First Name
         </label>
-        <input
+        <input [(ngModel)]="user.name"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
           id="grid-first-name" type="text" placeholder="Jane" formControlName="name">
         @if (valiedField('name')) {
@@ -19,7 +33,7 @@
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
           Last Name
         </label>
-        <input
+        <input [(ngModel)]="user.last_name"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           id="grid-last-name" type="text" placeholder="Doe" formControlName="last_name">
         @if (valiedField('last_name')) {
@@ -33,7 +47,7 @@
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">
           Email
         </label>
-        <input
+        <input [(ngModel)]="user.email"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           id="grid-email" type="email" placeholder="correo@correo.com" formControlName="email">
         @if (valiedField('email')) {
@@ -76,20 +90,22 @@
 
       <!--TODO suscription INPUT-->
       <div class="flex items-center mb-2 w-full px-3">
-        <input id="link-checkbox" type="checkbox" value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" formControlName="suscription">
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I want to receive notifications of our posts.</label>
+        <input [(ngModel)]="user.suscription" id="link-checkbox" type="checkbox" value=""
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          formControlName="suscription">
+        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I want to receive
+          notifications of our posts.</label>
       </div>
 
       @if (user.role === 'Admin') {
-        <div class="flex items-center mb-2 w-full px-3">
-          <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">User Role</label>
-          <select class="reading-time mt-4 mb-4" formControlName="role" [(ngModel)]="user.role">
-            @for (item of role; track $index) {
-            <option [value]="item">{{item}}</option>
-            }
-          </select>
-        </div>
+      <div class="flex items-center mb-2 w-full px-3">
+        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">User Role</label>
+        <select class="reading-time mt-4 mb-4" formControlName="role" [(ngModel)]="user.role">
+          @for (item of role; track $index) {
+          <option [value]="item">{{item}}</option>
+          }
+        </select>
+      </div>
       }
 
 
@@ -109,22 +125,26 @@
 
           <!-- Mostrar el texto del botón si no está cargando -->
           <ng-template #buttonText>
+            @if (!perfil) {
             Create account
+            }@else {
+            Update Profile
+            }
           </ng-template>
         </button>
       </div>
     </div>
 
-    <div class="flex items-center justify-center space-x-4">
+    <!--TODO CREATE ACCOUNT WITG GOOGLE BTN -->
+    <!-- <div class="flex items-center justify-center space-x-4">
       <div class="flex-grow h-px bg-gray-400"></div>
       <span class="text-gray-400">Or register with</span>
       <div class="flex-grow h-px bg-gray-400"></div>
     </div>
 
-    <!--TODO CREATE ACCOUNT WITG GOOGLE BTN -->
     <div class="flex flex-wrap -mx-3 mb-6 flex-col items-center mt-6">
       <app-login-with-social-media />
-    </div>
+    </div> -->
   </form>
 
 </mat-dialog-content>

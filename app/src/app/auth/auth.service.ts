@@ -19,14 +19,14 @@ export class AuthService {
   token!: string | null;
   private user: Partial<responseData> = {};
   private redirectUrl: string = '';
-  
+
 
   setRedirectUrl(url: string) {
     this.redirectUrl = url;
   }
 
   navigateToRedirectUrl() {
-    const targetUrl = this.redirectUrl || '/home';
+    const targetUrl = this.redirectUrl || '/blog';
     this.router.navigateByUrl(targetUrl);
   }
 
@@ -35,19 +35,32 @@ export class AuthService {
     return { ...this._auth };
   }
 
+  isAdmin(): boolean {
+    return this.user?.role === 'Admin';
+  }
+
   createUser(user: FormData) {
     return new Promise(resolve => {
       this.http.post(`${this.baseUrl}/auth/create`, user)
         .subscribe(async (resp: any) => {
+          if (!this.isAdmin()) {
             if (resp['ok'] && resp['user'].access_token) {
-                await this.saveToken(resp['user'].access_token);
+              await this.saveToken(resp['user'].access_token);
               resolve(true);
-            } else {
+            }else {
               this.clearSession();
             }
-        }, () => {
-          this.snackBarService.alertBar('Something went wrong please try again!');
-          this.clearSession();
+          }
+          if (resp['ok'] && resp['user']) {
+           /*  await this.saveToken(resp['user'].access_token); */
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        }, (error) => {
+          this.snackBarService.alertBar(error.message);
+          /* this.clearSession(); */
+          resolve(false);
         });
     })
   }
@@ -72,7 +85,7 @@ export class AuthService {
             resolve(false);
             this.clearSession();
           }
-        },()=>{
+        }, () => {
           this.snackBarService.alertBar('User not found or password is missing!');
           this.clearSession();
           resolve(false);
@@ -151,6 +164,9 @@ export class AuthService {
           } else {
             resolve(false);
           }
+        }, (error) => {
+          this.snackBarService.alertBar(error.message);
+          resolve(false);
         });
 
     });
