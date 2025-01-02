@@ -62,6 +62,13 @@ export class UsersService {
     return this.userModel.findByIdAndDelete(id);
   }
 
+  async userSubscribed(suscription:boolean):Promise<User[]> {
+    return this.userModel
+    .find({suscription:suscription})
+    .lean()
+    .exec();
+  }
+
 
 
 

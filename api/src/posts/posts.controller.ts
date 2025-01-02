@@ -10,11 +10,12 @@ import * as path from 'path';
 import * as uniqid from 'uniqid';
 import { FilterPostsDto } from 'src/dto/filterPostsDto';
 import { Posts } from 'src/models/posts';
+import { MailService } from 'src/mail/mail.service';
 
 @Controller('posts')
 export class PostsController {
 
-  constructor(private readonly postsService: PostsService, private fileSystem: FileSystemService) { };
+  constructor(private readonly postsService: PostsService, private fileSystem: FileSystemService,private email:MailService) { };
 
 
 
@@ -45,7 +46,10 @@ export class PostsController {
     try {
 
       postData.images = files.map((e) => { return e.filename });
-      const createPost = await this.postsService.createPost(postData)
+      const createPost = await this.postsService.createPost(postData);
+      if (createPost) {
+        this.email.testEamil(true, createPost)
+      }
       resp.send({ ok: true, message: "Post Created sussefully!", post: createPost });
 
     } catch (error) {

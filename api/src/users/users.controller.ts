@@ -3,10 +3,11 @@ import { Response } from 'express';
 import { UsersService } from './users.service';
 import { UserDto } from 'src/dto/userDto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { MailService } from 'src/mail/mail.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) { }
+  constructor(private readonly userService: UsersService, private email:MailService) { }
 
 
   @Get()
@@ -24,13 +25,28 @@ export class UsersController {
     };
   };
 
+  @Get('suscription')
+  async suscrito(@Query('suscription') suscription: string, @Res() resp: Response) {
+
+    try {
+      const isSubscribed = suscription === 'true';
+      console.log(isSubscribed);
+
+     /*  const user = await this.userService.userSubscribed(isSubscribed); */
+     const user = await this.email.testEamil(isSubscribed);
+      resp.send({ ok: true, user: user });
+    } catch (error) {
+      resp.status(404).send({ ok: false, message: error.message });
+    }
+  }
+
 
   @UseGuards(AuthGuard)
   @Patch(':id')
   async updateUser(@Param('id') id: string, @Res() resp: Response, @Body() userData: UserDto) {
     try {
-      const updatedUser  = await this.userService.updateUser(id, userData);
-      resp.send({ ok: true, messge: "User Updated Susscefully!", user: updatedUser  }); 
+      const updatedUser = await this.userService.updateUser(id, userData);
+      resp.send({ ok: true, messge: "User Updated Susscefully!", user: updatedUser });
     } catch (error) {
       resp.status(400).send({ ok: false, message: error.message });
     };

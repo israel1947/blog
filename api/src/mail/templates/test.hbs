@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .header {
+      background-color: #3b82f6;
+      color: #ffffff;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .content h2 {
+      margin: 0 0 10px 0;
+      color: #3b82f6;
+    }
+
+    .content p {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    .content .meta-info {
+      font-size: 14px;
+      color: #777777;
+    }
+
+    .footer {
+      background-color: #f1f1f1;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      color: #555555;
+    }
+
+    .footer a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>¡Nuevo Post Publicado!</h1>
+    </div>
+    <div class="content">
+      <img src="http://localhost:3000/posts/image/{{image}}" alt="Imagen {{title}}">
+      <h2>{{title}}</h2>
+      <div>{{{truncate  desciption 200}}}</div>
+      <p class="meta-info">
+        Categoría: <strong>{{category}}</strong><br>
+        Fecha de creación: {{creationDate}}<br>
+        Tiempo de lectura: {{readingTime}} minutos
+      </p>
+    </div>
+    <footer class="footer">
+      <p>Gracias por ser parte de nuestra comunidad.</p>
+      <p><a href="http://localhost:4200/post/{{url}}" target="_blank">Read complete article</a></p> 
+    </footer>
+  </div>
+  <script id="template" type="text/x-handlebars-template"></script> 
+</body>
+</html>

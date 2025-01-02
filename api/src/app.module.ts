@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
+import { MailModule } from './mail/mail.module';
 
 
 @Module({
@@ -16,7 +17,8 @@ import { CommentsModule } from './comments/comments.module';
     MongooseModule.forRoot(process.env.db, { dbName: process.env.DB_NAME }),
     AuthModule,
     PostsModule,
-    CommentsModule
+    CommentsModule,
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService],
