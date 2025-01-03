@@ -44,7 +44,8 @@
         }
       </div>
       <div class="flex items-center justify-center w-[100%]">
-        <button class="text-blue-600 font-medium mt-4 mb-4" (click)="more($event)">More</button>
+        <app-more [isLoading]="isLoading" [userID]="userID" (postsForUserId)="getResponse($event)"></app-more>
+       <!--  <button class="text-blue-600 font-medium mt-4 mb-4" (click)="more($event)">More</button> -->
       </div>
       }@else {
       <div

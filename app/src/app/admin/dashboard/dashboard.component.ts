@@ -10,10 +10,11 @@ import { ModalEditPerfilComponent } from '../../components/modal-edit-perfil/mod
 import { CommonModule } from '@angular/common';
 import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
 import { RegisterComponent } from '../../auth/register/register.component';
+import { MoreComponent } from '../../components/more/more.component';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [CardComponent, DashboardSkeletonComponent, RouterModule, CommonModule, ImagenProfilePipe],
+    imports: [CardComponent, DashboardSkeletonComponent, RouterModule, CommonModule, ImagenProfilePipe, MoreComponent],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
 })
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit {
     ngOnInit(): void {
         this.loadProfile();
         this.isLoading = !this.isLoading;
-        this.postsService.getAllPosts().subscribe((resp) => {
+        this.postsService.getAllPosts(true).subscribe((resp) => {
             this.userID = this.user._id;
             const userPosts = resp.posts.filter((post) => post.user_id === this.userID);
             this.postsData = userPosts;
@@ -65,25 +66,16 @@ export class DashboardComponent implements OnInit {
         })
     }
 
-
-    more(event: Event, pull: boolean = false) {
-        this.postsService.getAllPosts(pull).subscribe((resp) => {
-            const userPosts = resp.posts.filter((post) => post.user_id === this.userID);
-            if (userPosts) {
-                this.postsData.push(...userPosts)
-            }
-            if (event) {
-                event.target?.addEventListener('click', () => {
-                    pull = true;
-                })
-            }
+    getResponse(resp: Post[]) {
+        return resp.map((e) => {
+            this.postsData.push(e);
         })
     }
 
 
     editProfile() {
         const dialogRef = this.dialog.open(RegisterComponent);
-        dialogRef.afterClosed()
+        dialogRef.afterClosed();
     }
 
     addNewCreator() {

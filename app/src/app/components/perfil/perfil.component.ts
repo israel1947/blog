@@ -27,7 +27,7 @@ import { RegisterComponent } from '../../auth/register/register.component';
 export class PerfilComponent implements OnInit {
   isOpen: Boolean = false;
   perfil: responseData | null | any = null;
-  randomColor: string = '';
+/*   randomColor: string = ''; */
 
   user: Partial<responseData> = {}
 
@@ -47,7 +47,7 @@ export class PerfilComponent implements OnInit {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.perfil = JSON.parse(storedUser);
-      this.randomColor = this.generateRandomColor();
+     /*  this.randomColor = this.generateRandomColor(); */
     }
     this.getUserData();
   }
@@ -71,14 +71,14 @@ export class PerfilComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
 
-  generateRandomColor(): string {
+ /*  generateRandomColor(): string {
     const letters = '0123456789ABCDEF';
     let color = '#';
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
+  } */
 
   async logout() {
     this.snakService.openDialog().afterClosed().subscribe(async (close: boolean) => {

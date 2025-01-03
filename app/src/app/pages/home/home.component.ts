@@ -51,6 +51,7 @@ export class HomeComponent implements OnInit {
 
 
   allPosts(pull?: boolean) {
+    this.isLoading = !this.isLoading;
     this.postsServices.getAllPosts(pull).subscribe((post) => {
       this.postsFun(post.posts);
       this.posts = post.posts;
@@ -58,6 +59,7 @@ export class HomeComponent implements OnInit {
       this.latesNews = this.getLatesNews(post.posts);
       this.mostViews = this.getMostViews(post.posts);
       this.WeeklyHighlight = this.getWeeklyHighlight(post.posts);
+      this.isLoading = false;
     });
 
   };
@@ -105,17 +107,17 @@ export class HomeComponent implements OnInit {
           if (category === categoryTab) {
             this.pba = !this.pba;
             
-            this.WeeklyHighlight = categoryFilter.filter((lates) => {
+           /*  this.WeeklyHighlight = categoryFilter.filter((lates) => {
               return DateUtils.MostRecently(7, lates.created_at);
-            });
+            }); */
             
             this.latesNews = categoryFilter.filter((lates) => {
               return DateUtils.MostRecently(30, lates.created_at);
             });
-            this.latesNewsCategory =  this.latesNews;
+            this.latesNewsCategory =  this.latesNews;            
 
-            this.mostViews = categoryFilter.filter((views) => views.views >= 150);
-            this.isLoading = false;
+            /* this.mostViews = categoryFilter.filter((views) => views.views >= 150);
+            this.isLoading = false; */
           }
         } else {
           this.posts = [];
@@ -138,13 +140,3 @@ export class HomeComponent implements OnInit {
     this.carrucelCategory = resp/* .slice(0, -6) */;
   };
 }
-
-
-
-/* 
-
-categoryFilter((latesNewCate)=>{
-              return DateUtils.MostRecently(30, latesNewCate.created_at)
-            })
-
-*/

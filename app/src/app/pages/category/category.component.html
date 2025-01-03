@@ -3,12 +3,14 @@
     <app-carrucel [slideData2]="carrucelCategory" />
   </div>
 
-  <div class="flex flex-col gap-4 mt-4">
+  <div class="flex flex-col gap-4 mt-4 mb-8">
     @if (latesNewsCategory.length >0) {
     <h2 class="text-3xl font-bold mb-4">Lates News</h2>
     }
     @for (postlatesNews of latesNewsCategory.slice(); track $index) {
+    @if (postlatesNews.category === category) {
     <app-card [cardType]="'primary'" [post]="postlatesNews" [classType]="clasType2Card"></app-card>
+    }
     }
   </div>
 
@@ -17,8 +19,5 @@
     <app-card [cardType]="'secondary'" [post]="posts" [classType]="clasType2Card"></app-card>
     }
   </div>
-
-  <div class="btn-more content-center text-center m-8">
-    <button class="text-blue-600 bg-slate-300 p-2 font-bold rounded-[15px]">More</button>
-  </div>
+  <app-more [isLoading]="isLoading" [category]="category"  (postsCategory)="getResponse($event)"></app-more>
 </div>

@@ -1,0 +1,25 @@
+<div class="btn-more content-center text-center m-8">
+  <button class="text-blue-600 bg-slate-300 p-2 mb-8 font-bold rounded-[15px]" (click)="more($event)">
+    <ng-container *ngIf="isLoading; else buttonText">
+      <div class="loader">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+        <div class="bar4"></div>
+        <div class="bar5"></div>
+        <div class="bar6"></div>
+        <div class="bar7"></div>
+        <div class="bar8"></div>
+        <div class="bar9"></div>
+        <div class="bar10"></div>
+        <div class="bar11"></div>
+        <div class="bar12"></div>
+      </div>
+    </ng-container>
+
+    <!-- Mostrar el texto del botón si no está cargando -->
+    <ng-template #buttonText>
+      More
+    </ng-template>
+  </button>
+</div>
