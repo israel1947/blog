@@ -7,13 +7,12 @@ import { RouterLink } from '@angular/router';
 import { EmailValidatorService } from '../../shared/email-validator.service';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { CommonModule } from '@angular/common';
-import { LoginWithSocialMediaComponent } from '../login-with-social-media/login-with-social-media.component';
 import { responseData } from '../../interfaces/interface';
 import { FileUtils } from '../../shared/clases/file-helper';
 
 @Component({
   selector: 'app-register',
-  imports: [MatDialogModule, LoginWithSocialMediaComponent, ReactiveFormsModule, CommonModule],
+  imports: [MatDialogModule, ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -25,7 +24,7 @@ export class RegisterComponent implements OnInit {
   role: Array<string> = ['Admin', 'User'];
   selectedFile: File | null = null;
   perfil: responseData | null | any = null;
-  fieldsUserData: Array<string> = ['name', 'last_name', 'photo', 'email', 'suscription', 'role', 'password'];
+  fieldsUserData: Array<string> = ['name', 'last_name', 'email', 'suscription', 'role', 'password'];
 
   private authService: AuthService = inject(AuthService);
   private formBilder: FormBuilder = inject(FormBuilder);
@@ -95,21 +94,7 @@ export class RegisterComponent implements OnInit {
       this.registerForm.markAllAsTouched();
       return;
     }
-
-    const formData = new FormData();
-    const formFields = ['name', 'last_name', 'email', 'password', 'suscription', 'role'];
-    formFields.map(field => {
-      const value = this.registerForm.get(field)?.value;
-      if (value) {
-        formData.append(field, value);
-      }
-    });
-
-    const photo = this.registerForm.get('photo')?.value;
-    if (photo) {
-      formData.append('photo', photo); // add file
-    }
-
+    const formData = FileUtils.loadFileSelected('photo', this.registerForm, this.fieldsUserData);
     this.isLoading = !this.isLoading;
     const regiasterValid = await this.authService.createUser(formData)
       .catch((error) => {
@@ -134,18 +119,8 @@ export class RegisterComponent implements OnInit {
     };
 
     const formData = FileUtils.loadFileSelected('photo', this.registerForm, this.fieldsUserData);
-    const data = {
-      name: formData.get('name'),
-      last_name: formData.get('last_name'),
-      email: formData.get('email'),
-      password: formData.get('password'),
-      photo: formData.get('photo'),
-      suscription: formData.get('suscription'),
-      role: formData.get('role'),
-    };
-
     this.isLoading = !this.isLoading;
-    const updateInfo = await this.authService.updateUser(this.user._id, data)
+    const updateInfo = await this.authService.updateUser(this.user._id, formData)
       .catch((error) => {
         this.isLoading = false;
         this.snackBarService.alertBar(error.message, 'Aceptar');
