@@ -1,20 +1,17 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { responseData } from '../../interfaces/interface';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
 import { FileUtils } from '../../shared/clases/file-helper';
 import { VaidatorService } from '../../shared/vaidator.service';
 import { SnackbarService } from '../../shared/snackbar.service';
-import { firstValueFrom } from 'rxjs';
-import { RegisterComponent } from "../../auth/register/register.component";
 
 @Component({
   selector: 'app-modal-edit-perfil',
-  imports: [MatDialogModule, ReactiveFormsModule, CommonModule, MatButtonModule, ImagenProfilePipe, RegisterComponent],
+  imports: [MatDialogModule, ReactiveFormsModule, CommonModule, MatButtonModule],
   templateUrl: './modal-edit-perfil.component.html',
   styleUrl: './modal-edit-perfil.component.scss'
 })

@@ -3,18 +3,16 @@ import { PostsService } from '../../services/posts.service';
 import { ActivatedRoute } from '@angular/router';
 import { Comment, Post, User } from '../../interfaces/interface';
 import { CommonModule } from '@angular/common';
-import { CustomDatePipe } from '../../pipes/custom-date.pipe';
 import { MatChipsModule } from '@angular/material/chips';
 import { ComentsComponent } from '../../components/coments/coments.component';
 import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
-import { response } from 'express';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { StorgeServicesService } from '../../services/storge-services.service';
 
 @Component({
   selector: 'app-post',
-  imports: [CommonModule, CustomDatePipe, MatChipsModule, ComentsComponent, ImagenPipe, ImagenProfilePipe],
+  imports: [CommonModule, MatChipsModule, ComentsComponent, ImagenPipe, ImagenProfilePipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
