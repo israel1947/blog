@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, UseGuards, UseInterceptors, Param, ParseFilePipe, FileTypeValidator, UploadedFiles, Req, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards, UseInterceptors, Param, ParseFilePipe, FileTypeValidator, UploadedFiles, Req, Query, Delete } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { PostDto } from 'src/dto/postsDto';
 import { PostsService } from './posts.service';
@@ -103,6 +103,18 @@ export class PostsController {
       return res.json(result);
     } catch (error) {
       return res.status(500).json({ ok: false, message: 'Error fetching posts' });
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('delete/:id')
+  async deletePosts(@Param('id') id: string, @Res() resp: Response){
+    try {
+      const postToDelete = await this.postsService.removePosts(id);
+      resp.send({ ok: true, messge: `Posts deleted Susscefully!`});
+      return postToDelete;
+    } catch (error) {
+      return resp.status(500).json({ ok: false, message: `Posts with id ${error.value} not found or does not exist` });
     }
   }
 }

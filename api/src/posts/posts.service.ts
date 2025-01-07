@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Promise } from 'mongoose';
+import { Model, Promise, Types } from 'mongoose';
 import { FilterPostsDto } from 'src/dto/filterPostsDto';
 import { PostDto } from 'src/dto/postsDto';
 import { Posts } from 'src/models/posts';
@@ -100,4 +100,8 @@ export class PostsService {
       posts: postsByCategory
     }
   } 
+
+  async removePosts(id:string){
+    return  this.postModel.findByIdAndDelete(id);
+  }
 }
