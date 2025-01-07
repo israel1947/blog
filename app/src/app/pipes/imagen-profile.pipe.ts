@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { environment } from '../../enviroments/enviroments';
+import { environment } from '../../environments/environment';
 
 
 const URL = environment.URL;

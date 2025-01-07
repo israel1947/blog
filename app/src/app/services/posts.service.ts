@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../enviroments/enviroments';
+import { environment } from '../../environments/environment';
 import { Comment, Post, PostRequest, responseDataPosts, User } from '../interfaces/interface';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../auth/auth.service';

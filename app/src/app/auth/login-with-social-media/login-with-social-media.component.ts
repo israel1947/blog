@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { GoogleUser } from '../../interfaces/interface';
-import { environment } from '../../../enviroments/enviroments';
+import { environment } from '../../../environments/environments';
 import { AuthService } from '../auth.service';
 import { GoogleSigninButtonModule, SocialAuthService } from '@abacritt/angularx-social-login';
 import { SnackbarService } from '../../shared/snackbar.service';

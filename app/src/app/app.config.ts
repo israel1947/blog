@@ -6,7 +6,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { createCustomElement } from '@angular/elements';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { environment } from "../enviroments/enviroments";
+import { environment } from "../environments/environment";
 
 /* Google credentials  */
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';

@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../enviroments/enviroments';
+import { environment } from '../../environments/environment';
 import { GoogleUser, responseData, User } from '../interfaces/interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SnackbarService } from '../shared/snackbar.service';
