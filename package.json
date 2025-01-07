@@ -32,6 +32,7 @@
   "devDependencies": {
     "@types/http-errors": "^2.0.4",
     "@types/jasmine": "^5.1.5",
+    "@types/quill": "^2.0.14",
     "@types/stack-utils": "^2.0.3"
   }
 }
