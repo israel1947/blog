@@ -20,7 +20,7 @@ import { StorgeServicesService } from '../../services/storge-services.service';
 })
 export class PostComponent implements OnInit {
   postData: Partial<Post> = {};
-  userData!: User | undefined;
+  userData!: User;
   comentData: Partial<Comment>[] = [];
   route: ActivatedRoute = inject(ActivatedRoute);
   showFiller = false;

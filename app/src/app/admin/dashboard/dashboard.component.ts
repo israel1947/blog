@@ -21,7 +21,7 @@ import { MoreComponent } from '../../components/more/more.component';
 export class DashboardComponent implements OnInit {
 
     postsData: Post[] = []
-    userData!: User;
+    userData: Partial<User> = {};
     perfil: responseData | null | any = null;
     user: Partial<responseData> = {}
     userID: any;

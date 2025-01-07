@@ -12,7 +12,7 @@ import { responseData } from '../../interfaces/interface';
 
 @Component({
     selector: 'app-nav',
-    imports: [MatExpansionModule, MatIconModule, MatAccordion, PerfilComponent, RouterLink, MatButtonModule, MatDialogModule],
+    imports: [MatExpansionModule, MatIconModule, PerfilComponent, MatButtonModule, MatDialogModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './nav.component.html',
     styleUrl: './nav.component.scss'

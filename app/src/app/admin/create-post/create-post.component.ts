@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 import { FileUtils } from '../../shared/clases/file-helper';
 import Quill from 'quill';
-import "quill/dist/quill.core.css";
+/* import "quill/dist/quill.core.css"; */
 import { PostsService } from '../../services/posts.service';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { LoadingPencilComponent } from '../../components/loading-pencil/loading-pencil.component';

@@ -15,19 +15,19 @@
     <div class="perfil">
       <div class="perfil-content--info flex justify-between items-center w-[100%]">
         <div class="perfil-content-info--name">
-          <h1 class="font-bold text-[38px]">{{userData?.name}} {{userData?.last_name}}</h1>
-          <p><strong>{{userData?.email}} </strong></p>
+          <h1 class="font-bold text-[38px]">{{userData.name}} {{userData.last_name}}</h1>
+          <p><strong>{{userData.email}} </strong></p>
         </div>
         <div class="perfil-content-info-picture flex flex-col items-center justify-center gap-1">
-          @if (!userData?.photo) {
+          @if (!userData.photo) {
             <div class="img-perfil-initial w-[80px] h-[80px] rounded-full flex items-center justify-center bg-blue-500 text-white font-bold text-lg">
               {{ getInitials(user.name, user.last_name) }}
             </div>
           }
           <div class="img-perfil w-[80px] h-[80px] rounded-[50%] bg-cover bg-no-repeat object-center"
-            [ngStyle]="{'background-image': 'url(' + (userData?.photo | imagenProfile ) + ')'}">
+            [ngStyle]="{'background-image': 'url(' + (userData.photo | imagenProfile ) + ')'}">
           </div>
-          <h2 class="font-medium text-[18px]">{{userData?.name || 'Cargando...'}} {{userData?.last_name}}</h2>
+          <h2 class="font-medium text-[18px]">{{userData.name || 'Cargando...'}} {{userData.last_name}}</h2>
           <button class="text-green-800" (click)="editProfile()">Edit Profile<i class="ri-pencil-line"></i></button>
         </div>
       </div>

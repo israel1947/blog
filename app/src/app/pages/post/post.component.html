@@ -5,28 +5,28 @@
   <div class="flex items-center p-8 max-[768px]:flex-col">
     <div class="content">
       <div class="content--title p-2">
-        <h1 class="font-bold text-3xl">{{postData?.title}}</h1>
+        <h1 class="font-bold text-3xl">{{postData.title}}</h1>
       </div>
       <div class="content--info">
         <div class="content--perfil flex items-center justify-between p-2">
           <div class="content-info flex items-center gap-1">
             <div class="content-img">
               <div class="img-perfil w-[48px] h-[48px] rounded-[50%] bg-cover bg-no-repeat object-center"
-                [ngStyle]="{'background-image': 'url(' + (userData?.photo | imagenProfile ) + ')'}"></div>
+                [ngStyle]="{'background-image': 'url(' + (userData.photo | imagenProfile ) + ')'}"></div>
             </div>
             <div class="perfil flex justify-between">
               <div class="name-perfil  flex flex-col gap-1">
-                <strong>{{userData?.name}} {{userData?.last_name}}</strong>
-                <span>{{postData?.created_at | date:'mediumDate'}}</span>
+                <strong>{{userData.name}} {{userData.last_name}}</strong>
+                <span>{{postData.created_at | date:'mediumDate'}}</span>
                 <div class="reviews-post flex items-center justify-between">
                   <div class="perfil-reactions flex items-center gap-2">
-                    <button (click)="like()"><i class="ri-thumb-up-line ri-xl">{{postData?.likes}}</i></button>
-                    <button (click)="coments()"><i class="ri-chat-3-line ri-xl">{{postData?.comments}}</i> {{postData?.comments}}</button>
+                  <!--   <button (click)="like()"><i class="ri-thumb-up-line ri-xl">{{postData.likes}}</i></button> -->
+                    <button (click)="coments()"><i class="ri-chat-3-line ri-xl">{{postData.comments}}</i> {{postData?.comments}}</button>
                     @if (showFiller) {
                     <app-coments class="absolute right-0 top-0 h-[100vh]" [comentData]="comentData"
                       (valueClickClose)="close($event)"></app-coments>
                     }
-                    <i class="ri-eye-line ri-xl">{{postData?.views}}</i>
+                    <i class="ri-eye-line ri-xl">{{postData.views}}</i>
                   </div>
                 </div>
               </div>
@@ -34,8 +34,8 @@
           </div>
           <div class="category-post flex flex-col gap-2">
             <div class="category-title flex items-center gap-2">
-              <strong class="text-blue-600">{{postData?.category}}</strong>
-              <span>{{postData?.last_read_at}} read</span>
+              <strong class="text-blue-600">{{postData.category}}</strong>
+              <span>{{postData.last_read_at}} read</span>
             </div>
             <div class="perfil-actions flex items-center justify-end gap-2">
               <button (click)="savePost()"><i [class]="favoriteIcons"></i></button>
@@ -44,7 +44,7 @@
           </div>
         </div>
       </div>
-      <div class="content-description p-2" [innerHTML]="postData?.description">
+      <div class="content-description p-2" [innerHTML]="postData.description">
         <!-- <p class="mb-8">{{postData?.description}}</p> -->
       </div>
       <mat-chip-set>
