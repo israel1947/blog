@@ -72,7 +72,6 @@ export class DashboardComponent implements OnInit {
         })
     }
 
-
     editProfile() {
         const dialogRef = this.dialog.open(RegisterComponent);
         dialogRef.afterClosed();

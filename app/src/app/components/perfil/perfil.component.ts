@@ -10,13 +10,14 @@ import { ModalEditPerfilComponent } from '../modal-edit-perfil/modal-edit-perfil
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { RegisterComponent } from '../../auth/register/register.component';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-perfil',
   imports: [
-    CommonModule, 
-    ImagenProfilePipe, 
-    MatButtonModule, 
+    CommonModule,
+    ImagenProfilePipe,
+    MatButtonModule,
     RouterModule,
     MatDividerModule
   ],
@@ -27,7 +28,7 @@ import { RegisterComponent } from '../../auth/register/register.component';
 export class PerfilComponent implements OnInit {
   isOpen: Boolean = false;
   perfil: responseData | null | any = null;
-/*   randomColor: string = ''; */
+  /*   randomColor: string = ''; */
 
   user: Partial<responseData> = {}
 
@@ -47,7 +48,7 @@ export class PerfilComponent implements OnInit {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.perfil = JSON.parse(storedUser);
-     /*  this.randomColor = this.generateRandomColor(); */
+      /*  this.randomColor = this.generateRandomColor(); */
     }
     this.getUserData();
   }
@@ -71,25 +72,33 @@ export class PerfilComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
 
- /*  generateRandomColor(): string {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  } */
+  /*  generateRandomColor(): string {
+     const letters = '0123456789ABCDEF';
+     let color = '#';
+     for (let i = 0; i < 6; i++) {
+       color += letters[Math.floor(Math.random() * 16)];
+     }
+     return color;
+   } */
 
   async logout() {
-    this.snakService.openDialog().afterClosed().subscribe(async (close: boolean) => {
+    this.snakService.dialog.open(DialogComponent, {
+      data: {
+        title: 'logout',
+        message: 'Are you sure you want to log out?',
+        buttonAcept:"Yes, Logout",
+        buttonCancel:"Cancel"
+
+      }
+    }).afterClosed().subscribe(async (close: boolean) => {
       if (close) {
         await this.authService.clearSession();
         window.location.reload();
       }
-    });
+    })
   }
 
-  getRouterRoleUser(role:any) {
+  getRouterRoleUser(role: any) {
 
     if (role === 'Admin') {
       this.router.navigate(['/admin/dashboard']);

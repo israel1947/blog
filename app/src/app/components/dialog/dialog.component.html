@@ -1,8 +1,13 @@
-<h2 mat-dialog-title>Logout</h2>
+<h2 mat-dialog-title>{{data.title}}</h2>
 <mat-dialog-content>
-  Are you sure you want to log out?
+  <div class="{{data.classCustom}}">
+    <h1><i class="{{data.icon}}"></i></h1>
+    <p class="{{data.contextClass}}">{{ data.message }} <strong>{{ data.titlePost }}</strong></p>
+  </div>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="dialogRef.close(false)">No</button>
-  <button mat-button (click)="dialogRef.close(true)">Yes</button>
+<mat-dialog-actions class="flex gap-2">
+  <button class="rounded-full border border-gray-400 text-black p-2"
+    (click)="dialogRef.close(false)">{{data.buttonCancel}}</button>
+  <button class="rounded-full bg-red-500 text-white p-2 hover:bg-red-600"
+    (click)="dialogRef.close(true)">{{data.buttonAcept}}</button>
 </mat-dialog-actions>

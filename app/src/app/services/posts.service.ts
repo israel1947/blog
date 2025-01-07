@@ -5,6 +5,7 @@ import { Comment, Post, PostRequest, responseDataPosts, User } from '../interfac
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../auth/auth.service';
 import { catchError, tap, throwError } from 'rxjs';
+import { SnackbarService } from '../shared/snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,15 @@ export class PostsService {
   private readonly URL = environment.URL;
   private http: HttpClient = inject(HttpClient);
   private auth: AuthService = inject(AuthService);
+  private snackBarService: SnackbarService = inject(SnackbarService);
   paginaPost = 0;
   newPost = new EventEmitter<PostRequest>();
   postIdSignal = signal<string>('');
 
 
-  getProfilUser(post_id: number): Observable<{user:User}> {
-   /*  return this.http.get<User[]>(`${this.URL}/users?id=${post_id}`); */
-   return this.http.get<{user:User}>(`${this.URL}/users/${post_id}`);
+  getProfilUser(post_id: number): Observable<{ user: User }> {
+    /*  return this.http.get<User[]>(`${this.URL}/users?id=${post_id}`); */
+    return this.http.get<{ user: User }>(`${this.URL}/users/${post_id}`);
 
   };
 
@@ -63,12 +65,24 @@ export class PostsService {
 
   }
 
-  sendComment(commentData:Comment):Observable<{comment:Comment}>{
+  deletePost(id: string) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.auth.token ? this.auth.token.replace(/"/g, '') : ''}`
     });
 
-    return this.http.post<{comment:Comment}>(`${this.URL}/comments/create`, commentData,{headers});
+    return this.http.delete(`${this.URL}/posts/delete/${id}`, { headers }).subscribe((resp) => {
+      this.snackBarService.alertBar('Post Deleted sussefully!');
+      return resp;
+    })
+
+  }
+
+  sendComment(commentData: Comment): Observable<{ comment: Comment }> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.auth.token ? this.auth.token.replace(/"/g, '') : ''}`
+    });
+
+    return this.http.post<{ comment: Comment }>(`${this.URL}/comments/create`, commentData, { headers });
   }
 
 }

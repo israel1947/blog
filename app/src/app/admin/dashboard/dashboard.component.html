@@ -38,9 +38,9 @@
     <div class="posts">
       <h3 class="font-medium">Posts</h3>
       @if (postsData.length>0) {
-      <div class="grid grid-cols-2 gap-4 max-[768px]:grid-col-1">
+      <div class="grid grid-cols-2 gap-4 max-[768px]:grid-cols-1">
         @for (post of postsData; track $index) {
-        <app-card [cardType]="'tertiary'" [post]="post"></app-card>
+        <app-card [cardType]="'tertiary'" [post]="post" [cardAction]="'delete'" ></app-card>
         }
       </div>
       <div class="flex items-center justify-center w-[100%]">
