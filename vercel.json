@@ -5,7 +5,7 @@
       "src": "app/angular.json",
       "use": "@vercel/angular",
       "config": {
-        "distDir": "app/dist"
+        "outputPath": "app/dist/sing-in-google-app"
       }
     },
     {
@@ -24,11 +24,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/dist/main.js"
+      "dest": "api/dist/main.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/app/dist/sing-in-google-app/$1"
+      "dest": "app/dist/sing-in-google-app/$1"
     }
   ]
 }
