@@ -6,10 +6,10 @@ import { ConfigModule } from '@nestjs/config';
 
 async function bootstrap() {
   ConfigModule.forRoot({
-    envFilePath:'../.env',
-    isGlobal:true
+    envFilePath: '../.env',
+    isGlobal: true
   })
-  const app = await NestFactory.create(AppModule,{cors:true});
+  const app = await NestFactory.create(AppModule, { cors: true });
   const config = new DocumentBuilder()
     .setTitle('Blog')
     .setDescription('The blog API description')
@@ -20,11 +20,14 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
 
-  const port = process.env.PORT || 3001
+  const port = process.env.PORT || 3000;
+  await app.listen(port, '0.0.0.0', () => {
+    Logger.debug(`App it is listening on http://localhost:${port}`);
+  });
 
   Logger.debug(`App it is listening "${port}" port`);
 
 
-  
+
 }
 bootstrap();
