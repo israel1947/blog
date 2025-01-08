@@ -3,14 +3,12 @@
   "builds": [
     {
       "src": "app/angular.json",
-      "use": "@vercel/angular",
       "config": {
         "outputPath": "app/dist/sing-in-google-app"
       }
     },
     {
       "src": "api/main.ts",
-      "use": "@vercel/node",
       "config": {
         "includeFiles": [
           "api/dist/**",
