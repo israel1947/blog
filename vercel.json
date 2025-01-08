@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "cleanUrls": true,
+  "builds": [
+    {
+      "src": "app/angular.json",
+      "use": "@vercel/angular",
+      "config": {
+        "distDir": "app/dist"
+      }
+    },
+    {
+      "src": "api/main.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "api/dist/**",
+          "api/src/**",
+          "api/node_modules/**",
+          "api/package.json"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/dist/main.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/app/dist/sing-in-google-app/$1"
+    }
+  ]
+}

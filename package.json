@@ -25,7 +25,6 @@
     "@nestjs/config": "^3.2.3",
     "@nestjs/mongoose": "^10.0.10",
     "class-validator": "^0.14.1",
-    "concurrently": "^9.0.1",
     "mongoose": "^8.7.0",
     "quill": "^2.0.3"
   },
@@ -33,6 +32,7 @@
     "@types/http-errors": "^2.0.4",
     "@types/jasmine": "^5.1.5",
     "@types/quill": "^2.0.14",
-    "@types/stack-utils": "^2.0.3"
+    "@types/stack-utils": "^2.0.3",
+    "concurrently": "^9.1.2"
   }
 }
