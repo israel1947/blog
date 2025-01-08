@@ -15,7 +15,7 @@
     "frontend:test": "cd app && ng test",
     "start:backend:dev": "cd api &&  nest start --watch",
     "start:backend:debug": "cd api &&  nest start --debug --watch",
-    "start:backend:prod": "cd api &&  node dist/main",
+    "start:backend:prod": "cd api &&  node dist/src/main",
     "dev": "concurrently \"npm run frontend\" \"npm run start:backend:dev\"",
     "build": "concurrently \"npm run frontend:build\" \"npm run start:backend:build\""
   },
