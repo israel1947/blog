@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": "app/angular.json",
-      "use": "@vercel/angular",
+      "use": "",
       "config": {
         "outputPath": "app/dist/sing-in-google-app"
       }
