@@ -27,6 +27,11 @@
       "dest": "api/dist/main.js"
     },
     {
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+      },
       "src": "/(.*)",
       "dest": "app/dist/sing-in-google-app/$1"
     }
