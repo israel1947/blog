@@ -8,15 +8,16 @@
   ],
   "main": "index.js",
   "scripts": {
-    "frontend": "cd app && ng serve",
     "frontend:build": "cd app && ng build",
-    "frontend:test": "cd app && ng test",
+    "start:backend:build": "cd api &&  nest build",
+    "frontend": "cd app && ng serve",
     "start:backend": "cd api &&  nest start",
+    "frontend:test": "cd app && ng test",
     "start:backend:dev": "cd api &&  nest start --watch",
     "start:backend:debug": "cd api &&  nest start --debug --watch",
     "start:backend:prod": "cd api &&  node dist/main",
-    "start:all:dev": "concurrently \"npm run frontend\" \"npm run start:backend:dev\"",
-    "start:all:prod": "concurrently \"npm run frontend:build\" \"npm run start:backend:prod\""
+    "dev": "concurrently \"npm run frontend\" \"npm run start:backend:dev\"",
+    "build": "concurrently \"npm run frontend:build\" \"npm run start:backend:build\""
   },
   "keywords": [],
   "author": "",
