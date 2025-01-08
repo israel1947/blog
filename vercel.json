@@ -4,7 +4,6 @@
     {
       "src": "app/angular.json",
       "use": "@vercel/angular",
-      "buildCommand": "npm run frontend:build",
       "config": {
         "outputPath": "app/dist/sing-in-google-app"
       }
@@ -12,7 +11,6 @@
     {
       "src": "api/main.ts",
       "use": "@vercel/node",
-      "buildCommand": "npm run start:backend:prod",
       "config": {
         "includeFiles": [
           "api/dist/**",
