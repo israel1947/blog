@@ -51,6 +51,13 @@ function run(): void {
   server.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
+
+  server.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+    next();
+  });
 }
 
 run();
