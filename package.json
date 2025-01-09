@@ -13,6 +13,7 @@
     "frontend": "cd app && ng serve",
     "start:backend": "cd api &&  nest start",
     "frontend:test": "cd app && ng test",
+    "frontend:serve": "cd app && node dist/sing-in-google-app/server/server.mjs",
     "start:backend:dev": "cd api &&  nest start --watch",
     "start:backend:debug": "cd api &&  nest start --debug --watch",
     "start:backend:prod": "cd api &&  node dist/src/main",
