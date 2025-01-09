@@ -9,13 +9,13 @@ import  cors  from "cors";
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
+  server.use(cors());
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
   const commonEngine = new CommonEngine();
 
-  server.use(cors({ origin: '*' }));
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
