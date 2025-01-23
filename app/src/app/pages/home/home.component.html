@@ -24,7 +24,7 @@
 
     <div #cont2r class="container--cards">
       @for (post of posts.slice(4,7); track $index) {
-      <app-card [cardType]="'primary'" [post]="post" />
+      <app-card [cardType]="'primary'" [post]="post" [classType]="clasTypeCard" />
       }
     </div>
   </div>

@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   listItems = ['All', 'Negocios', 'Tecnología', 'test categoria', 'Cultura', 'Salud', 'Cocina', 'Finanzas', 'Desarrollo Personal', 'Educación'];
   posts: Post[] = [];
   slideData: CarrucelData[] = [];
-  clasTypeCard: string[] = ['container--card', 'flex', 'items-center', 'justify-center', 'gap-[10px]', 'cursor-pointer'];
+  clasTypeCard: string[] = ['cursor-pointer'];
   clasType2Card: string[] = ['container--card', 'flex', 'items-center', 'justify-center', 'gap-[10px]', 'flex-col', 'cursor-pointer'];
   pba: boolean = false;
   isLoading: boolean = false;
