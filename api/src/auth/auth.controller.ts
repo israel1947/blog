@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, FileTypeValidator, Get, HttpCode, HttpStatus, Param, ParseFilePipe, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Body, Controller, FileTypeValidator, Get, HttpCode, HttpStatus, Logger, Param, ParseFilePipe, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UserDto } from 'src/dto/userDto';
 import { AuthService } from './auth.service';
@@ -27,13 +27,15 @@ export class AuthController {
   @UseInterceptors(FileInterceptor('photo', {
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        const uploadPath = path.resolve(__dirname, '../../uploads/user/profile');
+        const uploadPath = path.resolve(process.cwd(), 'uploads/user/profile');
         cb(null, uploadPath);
       },
       filename: (req, file, cb) => {
         const nameArr = file.originalname.split('.')
         const extention = nameArr[nameArr.length - 1];
         const uniqId = uniqid();
+        Logger.debug("auth controller ",uniqId);
+
         const uniqueName = `${uniqId}.${extention}`
         cb(null, uniqueName);
       },

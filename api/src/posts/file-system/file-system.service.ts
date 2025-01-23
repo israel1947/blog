@@ -1,24 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as path from 'path'
 import * as fs from 'fs';
 
 @Injectable()
 export class FileSystemService {
   async getImgByUrl(img: string) {
-    const pathImage = path.resolve(__dirname, '../../../uploads', img);
+    const pathImage = path.resolve(process.cwd(), 'uploads', img);
     const exist = fs.existsSync(pathImage);
     if (!exist) {
-      console.log("Error: the image does not exist");
+      Logger.debug(pathImage)
+      Logger.error("Error: the image does not exist!!!!");
       return null;
     }
     return pathImage;
   };
 
   async getImgProfileByUrl(img: string) {
-    const pathImage = path.resolve(__dirname, '../../../uploads/user/profile', img);
+    const pathImage = path.resolve(process.cwd(), 'uploads/user/profile', img);
     const exist = fs.existsSync(pathImage);
     if (!exist) {
-      console.log("Error: the image does not exist");
+      Logger.error("Error: the image does not exist");
       return null;
     }
     return pathImage;

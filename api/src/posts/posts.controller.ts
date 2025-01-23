@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, UseGuards, UseInterceptors, Param, ParseFilePipe, FileTypeValidator, UploadedFiles, Req, Query, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards, UseInterceptors, Param, ParseFilePipe, FileTypeValidator, UploadedFiles, Req, Query, Delete, Logger } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { PostDto } from 'src/dto/postsDto';
 import { PostsService } from './posts.service';
@@ -24,7 +24,7 @@ export class PostsController {
   @UseInterceptors(FilesInterceptor('images', 3, {
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        const uploadPath = path.resolve(__dirname, '../../uploads');
+        const uploadPath = path.resolve(process.cwd(), 'uploads');
         cb(null, uploadPath);
       },
       filename: (req, file, cb) => {
