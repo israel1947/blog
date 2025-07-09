@@ -10,20 +10,23 @@ import { CommentsModule } from 'src/comments/comments.module';
 import { MailService } from 'src/mail/mail.service';
 import { MailModule } from 'src/mail/mail.module';
 import { UsersModule } from 'src/users/users.module';
-
+import { ConfigModule } from '@nestjs/config';
+import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 
 @Module({
   imports: [
+    ConfigModule,
     MongooseModule.forFeature([{ name: Posts.name, schema: PostSchema }]),
     MulterModule.register({ dest: './uploads' }), //file storage location
     CommentsModule,
-    UsersModule
+    UsersModule,
+    CloudinaryModule
   ],
   controllers: [PostsController],
   providers: [
     PostsService,
     FileSystemService,
-    MailService
+    MailService,
   ]
 })
 export class PostsModule { }

@@ -24,16 +24,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nestjs/config": "^3.2.3",
+    "@nestjs/axios": "^4.0.0",
+    "@nestjs/config": "^3.3.0",
     "@nestjs/mongoose": "^10.0.10",
     "class-validator": "^0.14.1",
+    "cloudinary": "^1.41.3",
     "dotenv": "^16.4.7",
     "mongoose": "^8.7.0",
+    "multer": "^2.0.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "quill": "^2.0.3"
   },
   "devDependencies": {
     "@types/http-errors": "^2.0.4",
     "@types/jasmine": "^5.1.5",
+    "@types/multer": "^2.0.0",
     "@types/quill": "^2.0.14",
     "@types/stack-utils": "^2.0.3",
     "concurrently": "^9.1.2"

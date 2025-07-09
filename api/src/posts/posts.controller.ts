@@ -11,51 +11,56 @@ import * as uniqid from 'uniqid';
 import { FilterPostsDto } from 'src/dto/filterPostsDto';
 import { Posts } from 'src/models/posts';
 import { MailService } from 'src/mail/mail.service';
+import { CloudinaryUploadFilesService } from 'src/cloudinary/cloudinary-upload-files.service';
 
 @Controller('posts')
 export class PostsController {
 
-  constructor(private readonly postsService: PostsService, private fileSystem: FileSystemService,private email:MailService) { };
+  constructor(
+    private readonly postsService: PostsService,
+    private fileSystem: FileSystemService,
+    private email: MailService,
+    private readonly uploadService: CloudinaryUploadFilesService
+  ) { };
 
 
 
   @UseGuards(AuthGuard)
   @Post('/create')
-  @UseInterceptors(FilesInterceptor('images', 3, {
-    storage: multer.diskStorage({
-      destination: (req, file, cb) => {
-        const uploadPath = path.resolve(process.cwd(), 'uploads');
-        cb(null, uploadPath);
-      },
-      filename: (req, file, cb) => {
-        const nameArr = file.originalname.split('.')
-        const extention = nameArr[nameArr.length - 1];
-        const uniqId = uniqid();
-        const uniqueName = `${uniqId}.${extention}`
-        cb(null, uniqueName);
-      },
-    }),
-  }))
-  async createPosts(@UploadedFiles(
-    new ParseFilePipe({
-      validators: [
-        new FileTypeValidator({ fileType: 'image/jpeg' })
-      ]
-    })
-  ) files: Array<Express.Multer.File>, @Body() postData: PostDto, @Res() resp: Response) {
+  @UseInterceptors(FilesInterceptor('images', 3,{storage: multer.memoryStorage()})) // Configurar Multer para manejar múltiples archivos
+  async createPosts(
+    @UploadedFiles(
+      new ParseFilePipe({
+        validators: [
+          new FileTypeValidator({ fileType: 'image/jpeg' }), // Podés agregar otros: png, etc.
+        ],
+      }),
+    ) files: Array<Express.Multer.File>,
+    @Body() postData: PostDto,
+    @Res() resp: Response,
+  ) {
     try {
+      // 👇 Subir a Cloudinary y mapear URLs
+      const uploadedImages = await Promise.all(
+        files.map((file) => this.uploadService.uploadImage(file))
+      );
 
-      postData.images = files.map((e) => { return e.filename });
+      postData.images = uploadedImages.map((img) => img.secure_url); // 👈 Guardar las URLs en el DTO
+
       const createPost = await this.postsService.createPost(postData);
+
       if (createPost) {
-        this.email.testEamil(true, createPost)
+        this.email.testEamil(true, createPost);
       }
-      resp.send({ ok: true, message: "Post Created sussefully!", post: createPost });
+
+      resp.send({ ok: true, message: 'Post Created successfully!', post: createPost });
 
     } catch (error) {
+      console.error(error);
       resp.status(400).send({ ok: false, message: error.message });
     }
   }
+
 
   @Get('search')
   async getpostsByCategory(@Query('category') category: string, @Res() resp: Response) {
@@ -108,10 +113,10 @@ export class PostsController {
 
   @UseGuards(AuthGuard)
   @Delete('delete/:id')
-  async deletePosts(@Param('id') id: string, @Res() resp: Response){
+  async deletePosts(@Param('id') id: string, @Res() resp: Response) {
     try {
       const postToDelete = await this.postsService.removePosts(id);
-      resp.send({ ok: true, messge: `Posts deleted Susscefully!`});
+      resp.send({ ok: true, messge: `Posts deleted Susscefully!` });
       return postToDelete;
     } catch (error) {
       return resp.status(500).json({ ok: false, message: `Posts with id ${error.value} not found or does not exist` });

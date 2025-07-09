@@ -2,7 +2,7 @@
   @for(slidea of slideData2.slice(-5); track $index ){
   <div class="relative max-[900px]:w-[100%]" *ngIf="$index === currentIndex">
     <div class="carrucel-content w-[100%] h-[57vh] rounded bg-cover bg-no-repeat object-center cursor-pointer"
-      [ngStyle]="{'background-image': 'url(' + (slidea?.images?.[0] | imagen)  + ')'}" [routerLink]="['/post', slidea.friendlyId]">
+      [ngStyle]="{'background-image': 'url(' + (slidea?.images?.[0])  + ')'}" [routerLink]="['/post', slidea.friendlyId]">
     </div>
     <div
       class="carrucel-info absolute left-0 bottom-0 w-[300px] p-2 backdrop-opacity-10 backdrop-invert bg-white/30 rounded-xl">

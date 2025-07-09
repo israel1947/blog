@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { MailModule } from './mail/mail.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 
 @Module({
@@ -18,7 +19,8 @@ import { MailModule } from './mail/mail.module';
     AuthModule,
     PostsModule,
     CommentsModule,
-    MailModule
+    MailModule,
+    CloudinaryModule
   ],
   controllers: [AppController],
   providers: [AppService],

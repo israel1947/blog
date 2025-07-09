@@ -9,6 +9,7 @@ import { ImagenPipe } from '../../pipes/imagen.pipe';
 import { ImagenProfilePipe } from '../../pipes/imagen-profile.pipe';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { StorgeServicesService } from '../../services/storge-services.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-post',
@@ -25,12 +26,13 @@ export class PostComponent implements OnInit {
   userId!: any;
   post_id!: any;
   urlSahre!: string;
-  favoriteIcons:string = 'ri-bookmark-line ri-xl';
+  favoriteIcons: string = 'ri-bookmark-line ri-xl';
 
   private comentsService: PostsService = inject(PostsService)
   private postServices: PostsService = inject(PostsService);
   private snakServie: SnackbarService = inject(SnackbarService);
-  private storageService:StorgeServicesService = inject(StorgeServicesService);
+  private storageService: StorgeServicesService = inject(StorgeServicesService);
+  private auth:AuthService = inject(AuthService);
 
   ngOnInit(): void {
     const postDetailId = this.route.snapshot.params['id'];
@@ -51,8 +53,14 @@ export class PostComponent implements OnInit {
   }
 
   async savePost() {
-   const exist = await this.storageService.savePosts(this.postData);
-   this.favoriteIcons = (exist) ? 'ri-bookmark-fill ri-xl':'ri-bookmark-line ri-xl';
+    const user = (await this.auth.getUser())._id
+    if (!user) {
+      this.snakServie.alertBar('Please log in to save posts');
+      return;
+    }
+    const exist = await this.storageService.savePosts(this.postData);
+    this.favoriteIcons = (exist) ? 'ri-bookmark-fill ri-xl' : 'ri-bookmark-line ri-xl';
+
   };
 
   async share() {
@@ -61,8 +69,8 @@ export class PostComponent implements OnInit {
       url: `post/${this.urlSahre}`,
     }
     await navigator.share(data)
-    .then(()=>this.snakServie.alertBar('Link shared! Thank you very much'))
-    .catch(()=>this.snakServie.alertBar('Oops, an error occurred'))
+      .then(() => this.snakServie.alertBar('Link shared! Thank you very much'))
+      .catch(() => this.snakServie.alertBar('Oops, an error occurred'))
   };
 
   like() {

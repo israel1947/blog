@@ -7,16 +7,21 @@ import { UsersService } from '../users/users.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { MulterModule } from '@nestjs/platform-express';
 import { FileSystemService } from 'src/posts/file-system/file-system.service';
+import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
+import { ConfigModule } from '@nestjs/config';
+
 
 @Module({
   imports:[
+    ConfigModule,
     MongooseModule.forFeature([{name:User.name, schema: UserSchema}]),
     MulterModule.register({ dest: './uploads/user/profile' }), //file storage location
     JwtModule.register({
       global:true,
       secret:process.env.SECRET,
       signOptions:{expiresIn:'90s'}
-    })
+    }),
+    CloudinaryModule
   ],
   controllers: [AuthController],
   providers: [

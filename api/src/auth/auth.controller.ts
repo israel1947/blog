@@ -4,16 +4,21 @@ import { UserDto } from 'src/dto/userDto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { LoginDto } from 'src/dto/loginDto';
-import { FileInterceptor} from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import * as multer from 'multer';
 import * as path from 'path';
 import * as uniqid from 'uniqid';
 import { FileSystemService } from 'src/posts/file-system/file-system.service';
+import { CloudinaryUploadFilesService } from 'src/cloudinary/cloudinary-upload-files.service';
 
 @Controller('auth')
 export class AuthController {
 
-  constructor(private readonly authService: AuthService, private fileSystem: FileSystemService) { }
+  constructor(
+    private readonly authService: AuthService, 
+    private fileSystem: FileSystemService,
+    private readonly uploadService: CloudinaryUploadFilesService
+  ) { }
 
 
 
@@ -24,43 +29,37 @@ export class AuthController {
       enableImplicitConversion: true,
     },
   }))
-  @UseInterceptors(FileInterceptor('photo', {
-    storage: multer.diskStorage({
-      destination: (req, file, cb) => {
-        const uploadPath = path.resolve(process.cwd(), 'uploads/user/profile');
-        cb(null, uploadPath);
-      },
-      filename: (req, file, cb) => {
-        const nameArr = file.originalname.split('.')
-        const extention = nameArr[nameArr.length - 1];
-        const uniqId = uniqid();
-        Logger.debug("auth controller ",uniqId);
-
-        const uniqueName = `${uniqId}.${extention}`
-        cb(null, uniqueName);
-      },
-    }),
-  }))
+  @UseInterceptors(FileInterceptor('photo',{storage: multer.memoryStorage()}))
   @Post('/create')
-  async createUser(@UploadedFile(new ParseFilePipe({
-    validators: [
-      new FileTypeValidator({ fileType: 'image/jpeg' })
-    ]
-  })) file: Express.Multer.File,
-    @Body() userData: UserDto, @Res() resp: Response) {
-
+  async createUser(
+    @UploadedFile(new ParseFilePipe({
+      validators: [
+        new FileTypeValidator({ fileType: 'image/*' }), 
+      ]
+    })) file: Express.Multer.File,
+    @Body() userData: UserDto,
+    @Res() resp: Response
+  ) {
     try {
-
       if (!file) {
+        Logger.debug(userData)
         throw new BadRequestException('File is required');
       }
-      userData.photo = file.filename;
+
+      // 👇 Subir a Cloudinary
+      const uploadResult = await this.uploadService.uploadImage(file);
+
+      // 👇 Guardar la URL en el DTO
+      userData.photo = uploadResult.secure_url;
+
       const createUser = await this.authService.createUser(userData);
-      resp.send({ ok: true, message: "User Created sussefully!", user: createUser });
+
+      resp.send({ ok: true, message: "User Created successfully!", user: createUser });
     } catch (error) {
+      Logger.error(error);
       resp.status(400).send({ ok: false, message: error.message });
-    };
-  };
+    }
+  }
 
   @HttpCode(HttpStatus.OK)
   @Post('/login')

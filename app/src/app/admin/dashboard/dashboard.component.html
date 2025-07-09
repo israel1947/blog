@@ -25,7 +25,7 @@
             </div>
           }
           <div class="img-perfil w-[80px] h-[80px] rounded-[50%] bg-cover bg-no-repeat object-center"
-            [ngStyle]="{'background-image': 'url(' + (userData.photo | imagenProfile ) + ')'}">
+            [ngStyle]="{'background-image': 'url(' + (userData.photo ) + ')'}">
           </div>
           <h2 class="font-medium text-[18px]">{{userData.name || 'Cargando...'}} {{userData.last_name}}</h2>
           <button class="text-green-800" (click)="editProfile()">Edit Profile<i class="ri-pencil-line"></i></button>

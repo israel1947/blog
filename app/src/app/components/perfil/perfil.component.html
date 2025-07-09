@@ -6,7 +6,7 @@
   }
 
   <div class="img-perfil w-[48px] h-[48px] rounded-[50%] bg-cover bg-no-repeat object-center"
-    [ngStyle]="{'background-image': 'url(' + (user.photo | imagenProfile) + ')'}">
+    [ngStyle]="{'background-image': 'url(' + (user.photo) + ')'}">
   </div>
   @if(!user.photo){
   <div
